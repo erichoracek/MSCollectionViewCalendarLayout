@@ -33,8 +33,8 @@ extern NSString *const MSCollectionElementKindDayColumnHeader;
 extern NSString *const MSCollectionElementKindTimeRowHeaderBackground;
 extern NSString *const MSCollectionElementKindDayColumnHeaderBackground;
 extern NSString *const MSCollectionElementKindCurrentTimeIndicator;
-extern NSString *const MSCollectionElementKindHorizontalGridline;
 extern NSString *const MSCollectionElementKindCurrentTimeHorizontalGridline;
+extern NSString *const MSCollectionElementKindHorizontalGridline;
 
 typedef NS_ENUM(NSUInteger, MSSectionLayoutType) {
     MSSectionLayoutTypeHorizontalTile,
