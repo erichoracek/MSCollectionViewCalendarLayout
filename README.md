@@ -20,6 +20,10 @@ $ pod install
 
 in the `Example` directory, and then build and run the `Example` target in the `Example.xcworkspace` that it creates.
 
+The example project queries the [SeatGeek](http://www.seatgeek.com) API for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`.
+
+## Screenshots
+
 <img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Vertical.png" alt="Vertical Layout" height="578" width="330" />
 <img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Horizontal.png" alt="Horizontal Layout" height="1034" width="778" />
 
