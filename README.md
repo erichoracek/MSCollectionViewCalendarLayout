@@ -2,6 +2,11 @@
 
 **MSCollectionViewCalendarLayout** was written by **Eric Horacek** for **[Monospace Ltd.](http://www.monospacecollective.com)**
 
+# Example
+
+<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Vertical.png" alt="Vertical Layout" height="490" width="320" style="border-radius:3px;background-color:#f8f8f8;padding:5px;border-width:1px;border-style:solid;border-color:#cccccc;" />
+<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Horizontal.png" alt="Horizontal Layout" height="768" width="1024" style="border-radius:3px;background-color:#f8f8f8;padding:5px;border-width:1px;border-style:solid;border-color:#cccccc;" />
+
 # Requirements
 
 Requires iOS 6.0 and ARC.
