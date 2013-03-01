@@ -4,8 +4,8 @@
 
 # Example
 
-<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Vertical.png" alt="Vertical Layout" height="490" width="320" />
-<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Horizontal.png" alt="Horizontal Layout" height="768" width="1024" />
+<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Vertical.png" alt="Vertical Layout" height="578" width="330" />
+<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Horizontal.png" alt="Horizontal Layout" height="778" width="1034" />
 
 # Requirements
 
