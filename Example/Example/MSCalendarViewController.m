@@ -166,8 +166,7 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 - (NSDate *)currentTimeComponentsForCollectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewLayout
 {
-#warning
-    return [[NSDate date] dateByAddingTimeInterval:(60 * 60 * 11)];
+    return [NSDate date];
 }
 
 @end

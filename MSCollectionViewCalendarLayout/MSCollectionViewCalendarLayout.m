@@ -171,7 +171,7 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
         self.currentTimeIndicatorAttributes = [NSMutableDictionary new];
         self.currentTimeHorizontalGridlineAttributes = [NSMutableDictionary new];
         
-        self.hourHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 80.0);
+        self.hourHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80.0 : 80.0);
         self.sectionWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 236.0 : 234.0);
         self.dayColumnHeaderHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 50.0);
         self.timeRowHeaderWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 60.0);
@@ -816,7 +816,8 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
             } else {
                 yOffset = 0.0;
             }
-            contentOffset = CGPointMake(self.contentMargin.left + ((self.sectionMargin.left + self.sectionWidth + self.sectionMargin.right) * closestSectionToCurrentTime), yOffset);
+            CGFloat xOffset = self.contentMargin.left + ((self.sectionMargin.left + self.sectionWidth + self.sectionMargin.right) * closestSectionToCurrentTime);
+            contentOffset = CGPointMake(xOffset, yOffset);
         } else {
             CGFloat yOffset;
             if (!CGRectEqualToRect(currentTimeHorizontalGridlineattributesFrame, CGRectZero)) {
