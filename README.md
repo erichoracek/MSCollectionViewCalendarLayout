@@ -10,7 +10,7 @@
 
 # Example
 
-The example project queries the [SeatGeek](http://www.seatgeek.com) API for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`. It project requires **CocoaPods** (For **RestKit** and **Cupertino Yankee**). If you don't have **CocoaPods**, you can learn how to install it [here](http://cocoapods.org).
+The example project queries the [SeatGeek](http://www.seatgeek.com) API for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`. It project requires **CocoaPods** (For RestKit, Cupertino Yankee, and UIColor-Utilities). If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
 
  To set it up, just run:
 
