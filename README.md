@@ -10,7 +10,7 @@
 
 # Example
 
-The example project queries the [SeatGeek](http://www.seatgeek.com) API for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`. It project requires **CocoaPods** (For RestKit, Cupertino Yankee, and UIColor-Utilities). If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
+The example project queries the [SeatGeek](http://www.seatgeek.com) API for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`. It requires **CocoaPods** (For RestKit, Cupertino Yankee, and UIColor-Utilities). If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
 
  To set it up, just run:
 
@@ -33,7 +33,7 @@ Add `MSCollectionViewCalendarLayout` to your `Podfile` and run `$ pod install`.
 
 ## Section Layouts
 
-On the iPhone, `MSCollectionViewCalendarLayout` defaults to tiling its day sections vertically. The day column headers act as they do in a table view, sticking to the top until they're replaced by the next day's as your scroll. On the iPad, the day sections are tiled horizontally. This behavior is controlled by the `sectionLayoutType` property. It's values can be:
+On the iPhone, `MSCollectionViewCalendarLayout` defaults to tiling its day sections vertically. The day column headers act as they do in a table view, sticking to the top until they're replaced by the next day's as your scroll. On the iPad, the day sections are tiled horizontally. This behavior is controlled by the `sectionLayoutType` property. Its values can be:
 
 * `MSSectionLayoutTypeHorizontalTile` – Day sections tile vertically.
 * `MSSectionLayoutTypeVerticalTile` – Day sections tile horizontally.
