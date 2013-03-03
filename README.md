@@ -1,6 +1,6 @@
 # Introduction
 
-**MSCollectionViewCalendarLayout** was written by **Eric Horacek** for **[Monospace Ltd.](http://www.monospacecollective.com)**
+**MSCollectionViewCalendarLayout** was written by **[Eric Horacek](https://twitter.com/erichoracek)** for **[Monospace Ltd.](http://www.monospacecollective.com)**
 
 `MSCollectionViewCalendarLayout` is a `UICollectionViewLayout` subclass for displaying chronological data. It divides its cells into columns of days, with the size of each cell corresponding to its length. `MSCollectionViewCalendarLayout` is very similar to the "Week" view in the Apple Calendar/iCal app. See the example screenshots for what this looks like.
 
