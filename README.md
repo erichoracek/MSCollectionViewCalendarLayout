@@ -6,7 +6,7 @@
 
 # UICollectionView?
 
-`UICollectionView` is awesome. If you're unfamiliar, read Mattt Thompson's [excellent article](http://nshipster.com/uicollectionview/) about them on [NSHipster](http://nshipster.com). Everyone should use them (yes, even instead of good ol' `UITableView`). This is especially true now that iOS 6 adoption is [above 85%](http://chitika.com/ios-version-distribution-update) (Feb 25, 2013). Also see [Drop iOS 5: Only support iOS 6](http://drewcrawfordapps.com/2.0/drop-ios-5-only-support-ios-6/). It's the right thing to do.
+`UICollectionView` is awesome. If you're unfamiliar, read Mattt Thompson's [excellent article](http://nshipster.com/uicollectionview/) about them on [NSHipster](http://nshipster.com). Everyone should use them (yes, even instead of good ol' `UITableView`). This is especially true now that iOS 6 adoption is [over 85%](http://david-smith.org/iosversionstats/) (As of March, 2013). Also see [Drop iOS 5: Only support iOS 6](http://drewcrawfordapps.com/2.0/drop-ios-5-only-support-ios-6/). It's the right thing to do.
 
 # Example
 
