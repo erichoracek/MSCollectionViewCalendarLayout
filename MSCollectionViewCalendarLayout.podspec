@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'MSCollectionViewCalendarLayout'
-  s.version      = '0.0.1'
+  s.version      = '0.0.2'
   s.summary      = 'UICollectionViewLayout subclass for displaying chronological data. Similar to the "Week" view in the Calendar app.'
   s.homepage     = 'https://github.com/monospacecollective/MSCollectionViewCalendarLayout'
   s.author       = { 'Eric Horacek' => 'eric@monospacecollective.com' }
