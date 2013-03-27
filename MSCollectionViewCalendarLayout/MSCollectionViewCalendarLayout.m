@@ -102,6 +102,7 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
 @property (nonatomic, strong) NSMutableDictionary *currentTimeIndicatorAttributes;
 @property (nonatomic, strong) NSMutableDictionary *currentTimeHorizontalGridlineAttributes;
 
+- (void)initialize;
 // Minute Updates
 - (void)minuteTick:(id)sender;
 // Layout
@@ -147,55 +148,16 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
 {
     self = [super init];
     if (self) {
-        
-        self.needsToPopulateAttributesForAllSections = YES;
-        self.cachedDayDateComponents = [NSCache new];
-        self.cachedStartTimeDateComponents = [NSCache new];
-        self.cachedEndTimeDateComponents = [NSCache new];
-        self.cachedCurrentDateComponents = [NSCache new];
-        self.cachedMaxColumnHeight = CGFLOAT_MIN;
-        self.cachedEarliestHour = NSIntegerMax;
-        self.cachedLatestHour = NSIntegerMin;
-        self.cachedColumnHeights = [NSMutableDictionary new];
-        self.cachedEarliestHours = [NSMutableDictionary new];
-        self.cachedLatestHours = [NSMutableDictionary new];
-        
-        self.registeredDecorationClasses = [NSMutableDictionary new];
-        
-        self.allAttributes = [NSMutableArray new];
-        self.itemAttributes = [NSMutableDictionary new];
-        self.dayColumnHeaderAttributes = [NSMutableDictionary new];
-        self.dayColumnHeaderBackgroundAttributes = [NSMutableDictionary new];
-        self.timeRowHeaderAttributes = [NSMutableDictionary new];
-        self.timeRowHeaderBackgroundAttributes = [NSMutableDictionary new];
-        self.horizontalGridlineAttributes = [NSMutableDictionary new];
-        self.currentTimeIndicatorAttributes = [NSMutableDictionary new];
-        self.currentTimeHorizontalGridlineAttributes = [NSMutableDictionary new];
-        
-        self.hourHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80.0 : 80.0);
-        self.sectionWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 236.0 : 234.0);
-        self.dayColumnHeaderHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 50.0);
-        self.timeRowHeaderWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 60.0);
-        self.currentTimeIndicatorSize = CGSizeMake(20.0, 20.0);
-        self.currentTimeHorizontalGridlineHeight = 1.0;
-        self.horizontalGridlineHeight = 1.0;
-        self.sectionMargin = UIEdgeInsetsMake(0.0, 8.0, 0.0, 8.0);
-        self.cellMargin = UIEdgeInsetsMake(0.0, 1.0, 1.0, 0.0);
-        self.contentMargin = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? UIEdgeInsetsMake(30.0, 0.0, 30.0, 30.0) : UIEdgeInsetsMake(20.0, 0.0, 20.0, 10.0));
-        
-        self.displayHeaderBackgroundAtOrigin = YES;
-        self.sectionLayoutType = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? MSSectionLayoutTypeHorizontalTile : MSSectionLayoutTypeVerticalTile);
-        self.headerLayoutType = MSHeaderLayoutTypeDayColumnAboveTimeRow;
-        
-        // Invalidate layout on minute ticks (to update the position of the current time indicator)
-        NSDate *oneMinuteInFuture = [[NSDate date] dateByAddingTimeInterval:60];
-        NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:oneMinuteInFuture];
-        NSDate *nextMinuteBoundary = [[NSCalendar currentCalendar] dateFromComponents:components];
-        
-        // This needs to be a weak reference, otherwise we get a retain cycle
-        MSTimerWeakTarget *timerWeakTarget = [[MSTimerWeakTarget alloc] initWithTarget:self selector:@selector(minuteTick:)];
-        self.minuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteBoundary interval:60 target:timerWeakTarget selector:timerWeakTarget.fireSelector userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:self.minuteTimer forMode:NSDefaultRunLoopMode];
+        [self initialize];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
     }
     return self;
 }
@@ -709,6 +671,58 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
 }
 
 #pragma mark - MSCollectionViewCalendarLayout
+
+- (void)initialize
+{
+    self.needsToPopulateAttributesForAllSections = YES;
+    self.cachedDayDateComponents = [NSCache new];
+    self.cachedStartTimeDateComponents = [NSCache new];
+    self.cachedEndTimeDateComponents = [NSCache new];
+    self.cachedCurrentDateComponents = [NSCache new];
+    self.cachedMaxColumnHeight = CGFLOAT_MIN;
+    self.cachedEarliestHour = NSIntegerMax;
+    self.cachedLatestHour = NSIntegerMin;
+    self.cachedColumnHeights = [NSMutableDictionary new];
+    self.cachedEarliestHours = [NSMutableDictionary new];
+    self.cachedLatestHours = [NSMutableDictionary new];
+    
+    self.registeredDecorationClasses = [NSMutableDictionary new];
+    
+    self.allAttributes = [NSMutableArray new];
+    self.itemAttributes = [NSMutableDictionary new];
+    self.dayColumnHeaderAttributes = [NSMutableDictionary new];
+    self.dayColumnHeaderBackgroundAttributes = [NSMutableDictionary new];
+    self.timeRowHeaderAttributes = [NSMutableDictionary new];
+    self.timeRowHeaderBackgroundAttributes = [NSMutableDictionary new];
+    self.horizontalGridlineAttributes = [NSMutableDictionary new];
+    self.currentTimeIndicatorAttributes = [NSMutableDictionary new];
+    self.currentTimeHorizontalGridlineAttributes = [NSMutableDictionary new];
+    
+    self.hourHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80.0 : 80.0);
+    self.sectionWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 236.0 : 234.0);
+    self.dayColumnHeaderHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 50.0);
+    self.timeRowHeaderWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 60.0);
+    self.currentTimeIndicatorSize = CGSizeMake(20.0, 20.0);
+    self.currentTimeHorizontalGridlineHeight = 1.0;
+    self.horizontalGridlineHeight = 1.0;
+    self.sectionMargin = UIEdgeInsetsMake(0.0, 8.0, 0.0, 8.0);
+    self.cellMargin = UIEdgeInsetsMake(0.0, 1.0, 1.0, 0.0);
+    self.contentMargin = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? UIEdgeInsetsMake(30.0, 0.0, 30.0, 30.0) : UIEdgeInsetsMake(20.0, 0.0, 20.0, 10.0));
+    
+    self.displayHeaderBackgroundAtOrigin = YES;
+    self.sectionLayoutType = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? MSSectionLayoutTypeHorizontalTile : MSSectionLayoutTypeVerticalTile);
+    self.headerLayoutType = MSHeaderLayoutTypeDayColumnAboveTimeRow;
+    
+    // Invalidate layout on minute ticks (to update the position of the current time indicator)
+    NSDate *oneMinuteInFuture = [[NSDate date] dateByAddingTimeInterval:60];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:oneMinuteInFuture];
+    NSDate *nextMinuteBoundary = [[NSCalendar currentCalendar] dateFromComponents:components];
+    
+    // This needs to be a weak reference, otherwise we get a retain cycle
+    MSTimerWeakTarget *timerWeakTarget = [[MSTimerWeakTarget alloc] initWithTarget:self selector:@selector(minuteTick:)];
+    self.minuteTimer = [[NSTimer alloc] initWithFireDate:nextMinuteBoundary interval:60 target:timerWeakTarget selector:timerWeakTarget.fireSelector userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.minuteTimer forMode:NSDefaultRunLoopMode];
+}
 
 #pragma mark Minute Updates
 
