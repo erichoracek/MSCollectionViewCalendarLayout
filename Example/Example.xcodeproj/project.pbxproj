@@ -194,7 +194,6 @@
 			children = (
 				3A9EDB7F16DD8FF10017C4ED /* MSAppDelegate.h */,
 				3A9EDB8016DD8FF10017C4ED /* MSAppDelegate.m */,
-				3A9EDBA416DDA0140017C4ED /* Example.xcdatamodeld */,
 				3A9EDBA316DD9BFA0017C4ED /* Model */,
 				3A9EDB9516DD92E40017C4ED /* View Controllers */,
 				3A9EDBA716DDA5450017C4ED /* Collection View Cells */,
@@ -249,6 +248,7 @@
 		3A9EDBA316DD9BFA0017C4ED /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3A9EDBA416DDA0140017C4ED /* Example.xcdatamodeld */,
 				3A9EDBA016DD99E00017C4ED /* MSEvent.h */,
 				3A9EDBA116DD99E00017C4ED /* MSEvent.m */,
 			);
