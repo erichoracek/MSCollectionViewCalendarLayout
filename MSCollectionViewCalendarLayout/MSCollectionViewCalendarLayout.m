@@ -38,6 +38,11 @@ NSString *const MSCollectionElementKindCurrentTimeHorizontalGridline = @"MSColle
 NSString *const MSCollectionElementKindTimeRowHeaderBackground = @"MSCollectionElementKindTimeRowHeaderBackground";
 NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectionElementKindDayColumnHeaderBackground";
 
+NSUInteger const MSCollectionMinOverlayZ = 1000.0; // Allows for 900 items in a sectio without z overlap issues
+NSUInteger const MSCollectionMinCellZ = 100.0;  // Allows for 100 items in a section's background
+NSUInteger const MSCollectionMinBackgroundZ = 0.0;
+
+
 @interface MSTimerWeakTarget : NSObject
 @property (nonatomic, weak) id target;
 @property (nonatomic, assign) SEL selector;
@@ -515,11 +520,13 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
 
 - (void)adjustItemsForOverlap:(NSArray *)sectionItemAttributes inSection:(NSUInteger)section sectionMinX:(CGFloat)sectionMinX
 {
-    NSMutableSet *adjustedIndexPaths = [NSMutableSet new];
+    NSMutableSet *adjustedAttributes = [NSMutableSet new];
+    NSUInteger sectionZ = MSCollectionMinCellZ;
+    
     for (UICollectionViewLayoutAttributes *itemAttributes in sectionItemAttributes) {
         
         // If an item's already been adjusted, move on to the next one
-        if ([adjustedIndexPaths containsObject:itemAttributes.indexPath]) {
+        if ([adjustedAttributes containsObject:itemAttributes]) {
             continue;
         }
         
@@ -537,9 +544,10 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
         // If there's items overlapping, we need to adjust them
         if (overlappingItems.count) {
             
+            // Add the item we're adjusting to the overlap set
             [overlappingItems insertObject:itemAttributes atIndex:0];
             
-            // Find the minY and maxY of the first and last
+            // Find the minY and maxY of the set
             CGFloat minY = CGFLOAT_MAX;
             CGFloat maxY = CGFLOAT_MIN;
             for (UICollectionViewLayoutAttributes *overlappingItemAttributes in overlappingItems) {
@@ -554,14 +562,14 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
             // Determine the number of divisions needed (maximum number of currently overlapping items)
             NSInteger divisions = 1;
             for (CGFloat currentY = minY; currentY <= maxY; currentY += 1.0) {
-                NSInteger numItemsForCurrentY = 0;
+                NSInteger numberItemsForCurrentY = 0;
                 for (UICollectionViewLayoutAttributes *overlappingItemAttributes in overlappingItems) {
                     if ((currentY >= CGRectGetMinY(overlappingItemAttributes.frame)) && (currentY < CGRectGetMaxY(overlappingItemAttributes.frame))) {
-                        numItemsForCurrentY++;
+                        numberItemsForCurrentY++;
                     }
                 }
-                if (numItemsForCurrentY > divisions) {
-                    divisions = numItemsForCurrentY;
+                if (numberItemsForCurrentY > divisions) {
+                    divisions = numberItemsForCurrentY;
                 }
             }
             
@@ -571,22 +579,32 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
             NSMutableArray *dividedAttributes = [NSMutableArray array];
             for (UICollectionViewLayoutAttributes *divisionAttributes in overlappingItems) {
                 
-                CGRect divisionAttributesFrame = divisionAttributes.frame;
-                divisionAttributesFrame.size.width = (divisionWidth - self.cellMargin.left - self.cellMargin.right);
-                divisionAttributesFrame.origin.x = sectionMinX + self.cellMargin.left;
+                CGFloat itemWidth = (divisionWidth - self.cellMargin.left - self.cellMargin.right);
                 
-                NSInteger horizontalAdjustment = 1;
-                for (UICollectionViewLayoutAttributes *dividedItemAttributes in dividedAttributes) {
-                    if (CGRectIntersectsRect(dividedItemAttributes.frame, divisionAttributesFrame)) {
-                        divisionAttributesFrame.origin.x = sectionMinX + ((divisionWidth * horizontalAdjustment) + self.cellMargin.left);
-                        horizontalAdjustment++;
-                    } else {
-                        break;
+                // It it hasn't yet been adjusted, perform adjustment
+                if (![adjustedAttributes containsObject:divisionAttributes]) {
+                
+                    CGRect divisionAttributesFrame = divisionAttributes.frame;
+                    divisionAttributesFrame.origin.x = (sectionMinX + self.cellMargin.left);
+                    divisionAttributesFrame.size.width = itemWidth;
+                
+                    // Horizontal Layout
+                    NSInteger adjustments = 1;
+                    for (UICollectionViewLayoutAttributes *dividedItemAttributes in dividedAttributes) {
+                        if (CGRectIntersectsRect(dividedItemAttributes.frame, divisionAttributesFrame)) {
+                            divisionAttributesFrame.origin.x = sectionMinX + ((divisionWidth * adjustments) + self.cellMargin.left);
+                            adjustments++;
+                        }
                     }
+
+                    // Stacking (lower items stack above higher items, since the title is at the top)
+                    divisionAttributes.zIndex = sectionZ;
+                    sectionZ ++;
+                    
+                    divisionAttributes.frame = divisionAttributesFrame;
+                    [dividedAttributes addObject:divisionAttributes];
+                    [adjustedAttributes addObject:divisionAttributes];
                 }
-                divisionAttributes.frame = divisionAttributesFrame;
-                [dividedAttributes addObject:divisionAttributes];
-                [adjustedIndexPaths addObject:divisionAttributes.indexPath];
             }
         }
     }
@@ -982,69 +1000,69 @@ NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectio
         case MSSectionLayoutTypeHorizontalTile: {
             // Current Time Indicator
             if ([elementKind isEqualToString:MSCollectionElementKindCurrentTimeIndicator]) {
-                return ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 12.0 : 7.0) : (floating ? 10.0 : 5.0));
+                return (MSCollectionMinOverlayZ + ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 9.0 : 4.0) : (floating ? 7.0 : 2.0)));
             }
             // Time Row Header
             else if ([elementKind isEqualToString:MSCollectionElementKindTimeRowHeader]) {
-                return ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 11.0 : 6.0) : (floating ? 9.0 : 4.0));
+                return (MSCollectionMinOverlayZ + ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 8.0 : 3.0) : (floating ? 6.0 : 1.0)));
             }
             // Time Row Header Background
             else if ([elementKind isEqualToString:MSCollectionElementKindTimeRowHeaderBackground]) {
-                return ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 10.0 : 5.0) : (floating ? 8.0 : 3.0));
+                return (MSCollectionMinOverlayZ + ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 7.0 : 2.0) : (floating ? 5.0 : 0.0)));
             }
             // Day Column Header
             else if ([elementKind isEqualToString:MSCollectionElementKindDayColumnHeader]) {
-                return ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 9.0 : 4.0) : (floating ? 12.0 : 7.0));
+                return (MSCollectionMinOverlayZ + ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 6.0 : 1.0) : (floating ? 9.0 : 4.0)));
             }
             // Day Column Header Background
             else if ([elementKind isEqualToString:MSCollectionElementKindDayColumnHeaderBackground]) {
-                return ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 8.0 : 3.0) : (floating ? 11.0 : 6.0));
+                return (MSCollectionMinOverlayZ + ((self.headerLayoutType == MSHeaderLayoutTypeTimeRowAboveDayColumn) ? (floating ? 5.0 : 0.0) : (floating ? 8.0 : 3.0)));
             }
             // Cell
             else if (elementKind == nil) {
-                return 2.0;
+                return MSCollectionMinCellZ;
             }
             // Current Time Horizontal Gridline
             else if ([elementKind isEqualToString:MSCollectionElementKindCurrentTimeHorizontalGridline]) {
-                return 1.0;
+                return (MSCollectionMinBackgroundZ + 1.0);
             }
             // Horizontal Gridline
             else if ([elementKind isEqualToString:MSCollectionElementKindHorizontalGridline]) {
-                return 0.0;
+                return MSCollectionMinBackgroundZ;
             }
         }
         case MSSectionLayoutTypeVerticalTile: {
             // Day Column Header
             if ([elementKind isEqualToString:MSCollectionElementKindDayColumnHeader]) {
-                return (floating ? 9.0 : 7.0);
+                return (MSCollectionMinOverlayZ + (floating ? 6.0 : 4.0));
             }
             // Day Column Header Background
             else if ([elementKind isEqualToString:MSCollectionElementKindDayColumnHeaderBackground]) {
-                return (floating ? 8.0 : 6.0);
+                return (MSCollectionMinOverlayZ + (floating ? 5.0 : 3.0));
             }
             // Current Time Indicator
             else if ([elementKind isEqualToString:MSCollectionElementKindCurrentTimeIndicator]) {
-                return 5.0;
+                return (MSCollectionMinOverlayZ + 2.0);
             }
             // Time Row Header
             if ([elementKind isEqualToString:MSCollectionElementKindTimeRowHeader]) {
-                return 4.0;
+                return (MSCollectionMinOverlayZ + 1.0);
             }
             // Time Row Header Background
             else if ([elementKind isEqualToString:MSCollectionElementKindTimeRowHeaderBackground]) {
-                return 3.0;
+                return MSCollectionMinOverlayZ;
             }
             // Cell
             else if (elementKind == nil) {
-                return 2.0;
+                return MSCollectionMinCellZ;
             }
             // Current Time Horizontal Gridline
             else if ([elementKind isEqualToString:MSCollectionElementKindCurrentTimeHorizontalGridline]) {
-                return 1.0;
+                return (MSCollectionMinBackgroundZ + 1.0);
             }
             // Horizontal Gridline
             else if ([elementKind isEqualToString:MSCollectionElementKindHorizontalGridline]) {
-                return 0.0;
+                return MSCollectionMinBackgroundZ;
             }
         }
     }
