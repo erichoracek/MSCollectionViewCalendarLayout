@@ -9,13 +9,17 @@
 #endif
 
 #ifdef __OBJC__
+    // System Frameworks
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <SystemConfiguration/SystemConfiguration.h>
+    // Pod Configuration
+    #define MAS_SHORTHAND
     // Pods
     #import <RestKit/RestKit.h>
     #import <CupertinoYankee/NSDate+CupertinoYankee.h>
     #import <UIColor-Utilities/UIColor+Expanded.h>
+    #import <Masonry/Masonry.h>
 #endif

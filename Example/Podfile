@@ -2,7 +2,9 @@ platform :ios, '6.0'
 
 xcodeproj 'Example'
 
-pod 'MSCollectionViewCalendarLayout', :local => '../'
-pod 'RestKit', '0.20.0'
+pod 'MSCollectionViewCalendarLayout', :path => '../'
+
+pod 'RestKit', '~> 0.20.3'
 pod 'CupertinoYankee', '~> 0.1.1'
 pod 'UIColor-Utilities', '~> 1.0.1'
+pod 'Masonry', '~> 0.2.3'

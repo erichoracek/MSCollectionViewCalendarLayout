@@ -1,0 +1,47 @@
+PODS:
+  - AFNetworking (1.3.2)
+  - CupertinoYankee (0.1.1)
+  - Masonry (0.2.3)
+  - MSCollectionViewCalendarLayout (0.0.2):
+    - CupertinoYankee (~> 0.1.1)
+  - RestKit (0.20.3):
+    - RestKit/Core
+  - RestKit/Core (0.20.3):
+    - RestKit/CoreData
+    - RestKit/Network
+    - RestKit/ObjectMapping
+  - RestKit/CoreData (0.20.3)
+  - RestKit/Network (0.20.3):
+    - AFNetworking (~> 1.3.0)
+    - RestKit/ObjectMapping
+    - RestKit/Support
+    - SOCKit
+  - RestKit/ObjectMapping (0.20.3)
+  - RestKit/Support (0.20.3):
+    - TransitionKit (= 1.1.1)
+  - SOCKit (1.1)
+  - TransitionKit (1.1.1)
+  - UIColor-Utilities (1.0.1)
+
+DEPENDENCIES:
+  - CupertinoYankee (~> 0.1.1)
+  - Masonry (~> 0.2.3)
+  - MSCollectionViewCalendarLayout (from `../`)
+  - RestKit (~> 0.20.3)
+  - UIColor-Utilities (~> 1.0.1)
+
+EXTERNAL SOURCES:
+  MSCollectionViewCalendarLayout:
+    :path: ../
+
+SPEC CHECKSUMS:
+  AFNetworking: 7f9bcd7c287a75476cd5c61e82fd3380e93e4c54
+  CupertinoYankee: 0e16738f844aae256bc4cf2cc7a79fdd8b08b68a
+  Masonry: 6ab455cddc0a29be3eebdca923d75207efe99664
+  MSCollectionViewCalendarLayout: 168ee1d253f9f7e5e77441d628f6dda4f3d2c1d2
+  RestKit: 1f181c180105a92f11ec4f6cd7de37625e516d83
+  SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
+  TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
+  UIColor-Utilities: a392783be1b72e5d5ad9ae450ef2280239441bc8
+
+COCOAPODS: 0.24.0
