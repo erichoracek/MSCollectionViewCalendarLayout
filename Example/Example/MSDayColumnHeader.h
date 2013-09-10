@@ -10,7 +10,7 @@
 
 @interface MSDayColumnHeader : UICollectionReusableView
 
-@property (nonatomic, strong) UILabel *title;
 @property (nonatomic, strong) NSDate *day;
+@property (nonatomic, assign) BOOL currentDay;
 
 @end
