@@ -14,14 +14,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHexString:@"a1a1a1"];
+        self.backgroundColor = [UIColor colorWithHexString:@"fd3935"];
     }
     return self;
-}
-
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:CGRectInset(frame, -10.0, 0.0)];
 }
 
 @end
