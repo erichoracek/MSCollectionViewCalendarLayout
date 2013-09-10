@@ -15,6 +15,3 @@ profile
 DerivedData
 .idea/
 *.hmap
-
-#CocoaPods
-Pods

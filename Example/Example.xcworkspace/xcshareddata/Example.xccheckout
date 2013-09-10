@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6C3E2CC5-481C-41A4-A771-84872350B6C8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Example</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9EDBB23B-5655-486C-9EA4-BA06AB33F890</key>
+		<string>ssh://github.com/monospacecollective/MSCollectionViewCalendarLayout.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Example/Example.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9EDBB23B-5655-486C-9EA4-BA06AB33F890</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/monospacecollective/MSCollectionViewCalendarLayout.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9EDBB23B-5655-486C-9EA4-BA06AB33F890</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9EDBB23B-5655-486C-9EA4-BA06AB33F890</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MSCollectionViewCalendarLayout</string>
+		</dict>
+	</array>
+</dict>
+</plist>
