@@ -54,35 +54,32 @@
         [self.contentView addSubview:self.location];
         
         [self updateColors];
+        
+        CGFloat borderWidth = 2.0;
+        CGFloat contentMargin = 2.0;
+        UIEdgeInsets contentPadding = UIEdgeInsetsMake(1.0, (borderWidth + 4.0), 1.0, 4.0);
+        
+        [self.borderView makeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(self.height);
+            make.width.equalTo(@(borderWidth));
+            make.left.equalTo(self.left);
+            make.top.equalTo(self.top);
+        }];
+        
+        [self.title makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.top).offset(contentPadding.top);
+            make.left.equalTo(self.left).offset(contentPadding.left);
+            make.right.equalTo(self.right).offset(-contentPadding.right);
+        }];
+        
+        [self.location makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.title.bottom).offset(contentMargin);
+            make.left.equalTo(self.left).offset(contentPadding.left);
+            make.right.equalTo(self.right).offset(-contentPadding.right);
+            make.bottom.lessThanOrEqualTo(self.bottom).offset(-contentPadding.bottom);
+        }];
     }
     return self;
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    self.borderView.frame = (CGRect){CGPointZero, {2.0, CGRectGetHeight(self.contentView.frame)}};
-    
-    UIEdgeInsets contentPadding = UIEdgeInsetsMake(1.0, 6.0, 1.0, 4.0);
-    CGFloat contentMargin = 2.0;
-    CGFloat contentWidth = (CGRectGetWidth(self.contentView.frame) - contentPadding.left - contentPadding.right);
-    
-    CGSize maxTitleSize = CGSizeMake(contentWidth, CGRectGetHeight(self.contentView.frame) - contentPadding.top - contentPadding.bottom);
-    CGSize titleSize = [self.title.text sizeWithFont:self.title.font constrainedToSize:maxTitleSize lineBreakMode:self.title.lineBreakMode];
-    CGRect titleFrame = self.title.frame;
-    titleFrame.size = titleSize;
-    titleFrame.origin.x = contentPadding.left;
-    titleFrame.origin.y = contentPadding.top;
-    self.title.frame = titleFrame;
-    
-    CGSize maxLocationSize = CGSizeMake(contentWidth, CGRectGetHeight(self.contentView.frame) - (CGRectGetMaxY(titleFrame) + contentMargin) - contentPadding.bottom);
-    CGSize locationSize = [self.location.text sizeWithFont:self.location.font constrainedToSize:maxLocationSize lineBreakMode:self.location.lineBreakMode];
-    CGRect locationFrame = self.location.frame;
-    locationFrame.size = locationSize;
-    locationFrame.origin.x = contentPadding.left;
-    locationFrame.origin.y = (CGRectGetMaxY(titleFrame) + contentMargin);
-    self.location.frame = locationFrame;
 }
 
 #pragma mark - UICollectionViewCell
@@ -103,9 +100,7 @@
     } else {
         self.layer.shadowOpacity = 0.0;
     }
-    
-    [super setSelected:selected];
-    
+    [super setSelected:selected]; // Must be here for animation to fire
     [self updateColors];
 }
 
@@ -114,11 +109,8 @@
 - (void)setEvent:(MSEvent *)event
 {
     _event = event;
-    
     self.title.text = event.title;
     self.location.text = event.location;
-    
-    [self setNeedsLayout];
 }
 
 - (void)updateColors
