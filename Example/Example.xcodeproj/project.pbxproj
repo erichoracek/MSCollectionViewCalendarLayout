@@ -37,8 +37,6 @@
 		3A9EDBB216DDF24C0017C4ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EDBB116DDF24C0017C4ED /* QuartzCore.framework */; };
 		3A9EDBB816DE8FAF0017C4ED /* MSCurrentTimeGridline.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDBB716DE8FAF0017C4ED /* MSCurrentTimeGridline.m */; };
 		3A9EDBBB16DE8FEB0017C4ED /* MSCurrentTimeIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDBBA16DE8FEB0017C4ED /* MSCurrentTimeIndicator.m */; };
-		3A9EDBBE16DEC1A20017C4ED /* MSCurrentTimeIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EDBBC16DEC1A20017C4ED /* MSCurrentTimeIndicator.png */; };
-		3A9EDBBF16DEC1A20017C4ED /* MSCurrentTimeIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EDBBD16DEC1A20017C4ED /* MSCurrentTimeIndicator@2x.png */; };
 		73FE75D8C4884452BD700225 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68FEEAE8C40D4C23B857EFA6 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -87,8 +85,6 @@
 		3A9EDBB716DE8FAF0017C4ED /* MSCurrentTimeGridline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCurrentTimeGridline.m; sourceTree = "<group>"; };
 		3A9EDBB916DE8FEB0017C4ED /* MSCurrentTimeIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCurrentTimeIndicator.h; sourceTree = "<group>"; };
 		3A9EDBBA16DE8FEB0017C4ED /* MSCurrentTimeIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCurrentTimeIndicator.m; sourceTree = "<group>"; };
-		3A9EDBBC16DEC1A20017C4ED /* MSCurrentTimeIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MSCurrentTimeIndicator.png; sourceTree = "<group>"; };
-		3A9EDBBD16DEC1A20017C4ED /* MSCurrentTimeIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSCurrentTimeIndicator@2x.png"; sourceTree = "<group>"; };
 		68FEEAE8C40D4C23B857EFA6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ADF134BF2C64AFAB7EFE53A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -116,7 +112,6 @@
 			children = (
 				3A71A5CE16DFE2C800AF09E5 /* Icon */,
 				3A71A5CF16DFE2CD00AF09E5 /* Default */,
-				3A71A5D016DFE3A600AF09E5 /* Current Time Indicator */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -143,15 +138,6 @@
 				3A9EDB8616DD8FF10017C4ED /* Default-568h@2x.png */,
 			);
 			name = Default;
-			sourceTree = "<group>";
-		};
-		3A71A5D016DFE3A600AF09E5 /* Current Time Indicator */ = {
-			isa = PBXGroup;
-			children = (
-				3A9EDBBC16DEC1A20017C4ED /* MSCurrentTimeIndicator.png */,
-				3A9EDBBD16DEC1A20017C4ED /* MSCurrentTimeIndicator@2x.png */,
-			);
-			name = "Current Time Indicator";
 			sourceTree = "<group>";
 		};
 		3A9EDB6416DD8FF10017C4ED = {
@@ -322,8 +308,6 @@
 				3A9EDB8316DD8FF10017C4ED /* Default.png in Resources */,
 				3A9EDB8516DD8FF10017C4ED /* Default@2x.png in Resources */,
 				3A9EDB8716DD8FF10017C4ED /* Default-568h@2x.png in Resources */,
-				3A9EDBBE16DEC1A20017C4ED /* MSCurrentTimeIndicator.png in Resources */,
-				3A9EDBBF16DEC1A20017C4ED /* MSCurrentTimeIndicator@2x.png in Resources */,
 				3A71A5C716DFE2C200AF09E5 /* Icon-72.png in Resources */,
 				3A71A5C816DFE2C200AF09E5 /* Icon-Small-50.png in Resources */,
 				3A71A5C916DFE2C200AF09E5 /* Icon-72@2x.png in Resources */,
