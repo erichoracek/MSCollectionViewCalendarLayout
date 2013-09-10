@@ -34,6 +34,7 @@ extern NSString *const MSCollectionElementKindTimeRowHeaderBackground;
 extern NSString *const MSCollectionElementKindDayColumnHeaderBackground;
 extern NSString *const MSCollectionElementKindCurrentTimeIndicator;
 extern NSString *const MSCollectionElementKindCurrentTimeHorizontalGridline;
+extern NSString *const MSCollectionElementKindVerticalGridline;
 extern NSString *const MSCollectionElementKindHorizontalGridline;
 
 typedef NS_ENUM(NSUInteger, MSSectionLayoutType) {
@@ -59,6 +60,7 @@ typedef NS_ENUM(NSUInteger, MSHeaderLayoutType) {
 @property (nonatomic, assign) CGFloat timeRowHeaderWidth;
 @property (nonatomic, assign) CGSize currentTimeIndicatorSize;
 @property (nonatomic, assign) CGFloat horizontalGridlineHeight;
+@property (nonatomic, assign) CGFloat verticalGridlineWidth;
 @property (nonatomic, assign) CGFloat currentTimeHorizontalGridlineHeight;
 @property (nonatomic, assign) UIEdgeInsets sectionMargin;
 @property (nonatomic, assign) UIEdgeInsets contentMargin;
