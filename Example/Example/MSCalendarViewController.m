@@ -26,8 +26,9 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 @interface MSCalendarViewController () <MSCollectionViewDelegateCalendarLayout, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) MSCollectionViewCalendarLayout *collectionViewLayout;
+@property (nonatomic, strong) MSCollectionViewCalendarLayout *collectionViewCalendarLayout;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) UIToolbar *statusBarBackgroundView;
 
 - (void)loadData;
 
@@ -37,9 +38,9 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 - (id)init
 {
-    self.collectionViewLayout = [[MSCollectionViewCalendarLayout alloc] init];
-    self.collectionViewLayout.delegate = self;
-    self = [super initWithCollectionViewLayout:self.collectionViewLayout];
+    self.collectionViewCalendarLayout = [[MSCollectionViewCalendarLayout alloc] init];
+    self.collectionViewCalendarLayout.delegate = self;
+    self = [super initWithCollectionViewLayout:self.collectionViewCalendarLayout];
     return self;
 }
 
@@ -47,18 +48,31 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 {
     [super viewDidLoad];
     
+    self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.collectionView.layer.masksToBounds = NO;
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor whiteColor];
+    
+    // Easy status bar background blurring
+    self.statusBarBackgroundView = [UIToolbar new];
+    self.statusBarBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.statusBarBackgroundView];
     
     [self.collectionView registerClass:MSEventCell.class forCellWithReuseIdentifier:MSEventCellReuseIdentifier];
     [self.collectionView registerClass:MSDayColumnHeader.class forSupplementaryViewOfKind:MSCollectionElementKindDayColumnHeader withReuseIdentifier:MSDayColumnHeaderReuseIdentifier];
     [self.collectionView registerClass:MSTimeRowHeader.class forSupplementaryViewOfKind:MSCollectionElementKindTimeRowHeader withReuseIdentifier:MSTimeRowHeaderReuseIdentifier];
-
+    
     // These are optional—if you don't want any of the decoration views, just don't register a class for it
-    [self.collectionViewLayout registerClass:MSCurrentTimeIndicator.class forDecorationViewOfKind:MSCollectionElementKindCurrentTimeIndicator];
-    [self.collectionViewLayout registerClass:MSCurrentTimeGridline.class forDecorationViewOfKind:MSCollectionElementKindCurrentTimeHorizontalGridline];
-    [self.collectionViewLayout registerClass:MSGridline.class forDecorationViewOfKind:MSCollectionElementKindHorizontalGridline];
-    [self.collectionViewLayout registerClass:MSTimeRowHeaderBackground.class forDecorationViewOfKind:MSCollectionElementKindTimeRowHeaderBackground];
-    [self.collectionViewLayout registerClass:MSDayColumnHeaderBackground.class forDecorationViewOfKind:MSCollectionElementKindDayColumnHeaderBackground];
+    [self.collectionViewCalendarLayout registerClass:MSCurrentTimeIndicator.class forDecorationViewOfKind:MSCollectionElementKindCurrentTimeIndicator];
+    [self.collectionViewCalendarLayout registerClass:MSCurrentTimeGridline.class forDecorationViewOfKind:MSCollectionElementKindCurrentTimeHorizontalGridline];
+    [self.collectionViewCalendarLayout registerClass:MSGridline.class forDecorationViewOfKind:MSCollectionElementKindHorizontalGridline];
+    [self.collectionViewCalendarLayout registerClass:MSTimeRowHeaderBackground.class forDecorationViewOfKind:MSCollectionElementKindTimeRowHeaderBackground];
+    [self.collectionViewCalendarLayout registerClass:MSDayColumnHeaderBackground.class forDecorationViewOfKind:MSCollectionElementKindDayColumnHeaderBackground];
+    
+    self.collectionViewCalendarLayout.horizontalGridlineHeight = 0.5;
+    self.collectionViewCalendarLayout.timeRowHeaderWidth = 50.0;
+    self.collectionViewCalendarLayout.cellMargin = UIEdgeInsetsMake(1.5, 1.0, 1.0, 0.0);
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"start" ascending:YES]];
@@ -71,13 +85,24 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:nil];
     
+    NSDictionary *views = @{
+        @"topGuide" : self.topLayoutGuide,
+        @"collectionView" : self.collectionView,
+        @"statusBarBackgroundView" : self.statusBarBackgroundView
+    };
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGuide][collectionView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[statusBarBackgroundView(topGuide)]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[statusBarBackgroundView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[collectionView]|" options:0 metrics:nil views:views]];
+    
     [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.collectionViewLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:NO];
+    [self.collectionViewCalendarLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:NO];
 }
 
 #pragma mark - MSCalendarViewController
@@ -102,7 +127,7 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.collectionViewLayout invalidateLayoutCache];
+    [self.collectionViewCalendarLayout invalidateLayoutCache];
     [self.collectionView reloadData];
 }
 
@@ -131,12 +156,12 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
     UICollectionReusableView *view;
     if ([kind isEqualToString:MSCollectionElementKindDayColumnHeader]) {
         MSDayColumnHeader *dayColumnHeader = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:MSDayColumnHeaderReuseIdentifier forIndexPath:indexPath];
-        dayColumnHeader.day = [self.collectionViewLayout dateForDayColumnHeaderAtIndexPath:indexPath];
+        dayColumnHeader.day = [self.collectionViewCalendarLayout dateForDayColumnHeaderAtIndexPath:indexPath];
         view = dayColumnHeader;
     }
     else if ([kind isEqualToString:MSCollectionElementKindTimeRowHeader]) {
         MSTimeRowHeader *timeRowHeader = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:MSTimeRowHeaderReuseIdentifier forIndexPath:indexPath];
-        timeRowHeader.time = [self.collectionViewLayout dateForTimeRowHeaderAtIndexPath:indexPath];
+        timeRowHeader.time = [self.collectionViewCalendarLayout dateForTimeRowHeaderAtIndexPath:indexPath];
         view = timeRowHeader;
     }
     return view;
@@ -144,27 +169,27 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 #pragma mark - MSCollectionViewCalendarLayout
 
-- (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewLayout dayForSection:(NSInteger)section
+- (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewCalendarLayout dayForSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
     MSEvent *event = sectionInfo.objects[0];
     return [event day];
 }
 
-- (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewLayout startTimeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewCalendarLayout startTimeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MSEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
     return event.start;
 }
 
-- (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewLayout endTimeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewCalendarLayout endTimeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MSEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // Sports usually last about 3 hours, and SeatGeek doesn't provide an end time
     return [event.start dateByAddingTimeInterval:(60 * 60 * 3)];
 }
 
-- (NSDate *)currentTimeComponentsForCollectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewLayout
+- (NSDate *)currentTimeComponentsForCollectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewCalendarLayout
 {
     return [NSDate date];
 }

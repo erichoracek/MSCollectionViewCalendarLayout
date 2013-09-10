@@ -17,8 +17,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.title = [UILabel new];
         self.title.backgroundColor = [UIColor clearColor];
-        self.title.shadowColor = [UIColor whiteColor];
-        self.title.shadowOffset = CGSizeMake(0.0, 1.0);
+        self.title.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.title];
     }
     return self;
@@ -30,9 +29,13 @@
     
     [self.title sizeToFit];
     CGRect titleFrame = self.title.frame;
+    titleFrame.size.width += 18.0;
+    titleFrame.size.height += 6.0;
     titleFrame.origin.x = nearbyintf((CGRectGetWidth(self.frame) / 2.0) - (CGRectGetWidth(titleFrame) / 2.0));
     titleFrame.origin.y = nearbyintf((CGRectGetHeight(self.frame) / 2.0) - (CGRectGetHeight(titleFrame) / 2.0));
     self.title.frame = titleFrame;
+    
+    self.title.layer.cornerRadius = nearbyintf(CGRectGetHeight(titleFrame) / 2.0);
 }
 
 - (void)setDay:(NSDate *)day
@@ -40,14 +43,20 @@
     _day = day;
     
     if ([[day beginningOfDay] isEqualToDate:[[NSDate date] beginningOfDay]]) {
-        self.title.textColor = [UIColor colorWithHexString:@"3e77e3"];
+        self.title.textColor = [UIColor colorWithHexString:@"ffffff"];
+        self.title.font = [UIFont boldSystemFontOfSize:16.0];
+        self.title.backgroundColor = [UIColor colorWithHexString:@"35b1f1"];
     } else {
-        self.backgroundColor = [UIColor clearColor];
-        self.title.textColor = [UIColor colorWithHexString:@"918c8c"];
+        self.title.font = [UIFont systemFontOfSize:16.0];
+        self.title.textColor = [UIColor colorWithHexString:@"b8b8b8"];
+        self.title.backgroundColor = [UIColor clearColor];
     }
     
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    dateFormatter.dateFormat = @"EEEE, MMM d";
+    static NSDateFormatter *dateFormatter;
+    if (!dateFormatter) {
+        dateFormatter = [NSDateFormatter new];
+        dateFormatter.dateFormat = @"EEEE MMMM d, YYYY";
+    }
     self.title.text = [dateFormatter stringFromDate:day];
     [self setNeedsLayout];
 }

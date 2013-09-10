@@ -14,7 +14,6 @@
 
 @property (nonatomic, weak) MSEvent *event;
 
-@property (nonatomic, strong) UILabel *time;
 @property (nonatomic, strong) UILabel *title;
 @property (nonatomic, strong) UILabel *location;
 

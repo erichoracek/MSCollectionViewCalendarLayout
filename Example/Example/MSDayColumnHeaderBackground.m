@@ -8,17 +8,31 @@
 
 #import "MSDayColumnHeaderBackground.h"
 
+@interface MSDayColumnHeaderBackground ()
+
+@property (nonatomic, strong) UIToolbar *toolbar;
+
+@end
+
 @implementation MSDayColumnHeaderBackground
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithHexString:@"eeeeee"];
-        self.layer.borderColor = [[UIColor colorWithHexString:@"cccccc"] CGColor];
-        self.layer.borderWidth = 1.0;
+        // Easy blurring
+        self.toolbar = [[UIToolbar alloc] initWithFrame:frame];
+        self.toolbar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        self.layer.masksToBounds = YES;
+        [self addSubview:self.toolbar];
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.toolbar.frame = (CGRect){CGPointZero, self.frame.size};
 }
 
 @end
