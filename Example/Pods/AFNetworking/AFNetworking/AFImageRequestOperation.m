@@ -36,12 +36,9 @@ static dispatch_queue_t image_request_operation_processing_queue() {
 #import <CoreGraphics/CoreGraphics.h>
 
 static UIImage * AFImageWithDataAtScale(NSData *data, CGFloat scale) {
-    if ([UIImage instancesRespondToSelector:@selector(initWithData:scale:)]) {
-        return [[UIImage alloc] initWithData:data scale:scale];
-    } else {
-        UIImage *image = [[UIImage alloc] initWithData:data];
-        return [[UIImage alloc] initWithCGImage:[image CGImage] scale:scale orientation:image.imageOrientation];
-    }
+    UIImage *image = [[UIImage alloc] initWithData:data];
+    
+    return [[UIImage alloc] initWithCGImage:[image CGImage] scale:scale orientation:image.imageOrientation];
 }
 
 static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *response, NSData *data, CGFloat scale) {
@@ -49,6 +46,11 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         return nil;
     }
 
+    UIImage *image = AFImageWithDataAtScale(data, scale);
+    if (image.images) {
+        return image;
+    }
+    
     CGImageRef imageRef = nil;
     CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
 
@@ -59,21 +61,15 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
     }
     
     if (!imageRef) {
-        UIImage *image = AFImageWithDataAtScale(data, scale);
-        if (image.images) {
+        imageRef = CGImageCreateCopy([image CGImage]);
+
+        if (!imageRef) {
             CGDataProviderRelease(dataProvider);
-            
             return image;
         }
-        
-        imageRef = CGImageCreateCopy([image CGImage]);
     }
 
     CGDataProviderRelease(dataProvider);
-
-    if (!imageRef) {
-        return nil;
-    }
 
     size_t width = CGImageGetWidth(imageRef);
     size_t height = CGImageGetHeight(imageRef);
@@ -100,7 +96,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
     if (!context) {
         CGImageRelease(imageRef);
 
-        return [[UIImage alloc] initWithData:data];
+        return image;
     }
 
     CGRect rect = CGRectMake(0.0f, 0.0f, width, height);
@@ -108,7 +104,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
     CGImageRef inflatedImageRef = CGBitmapContextCreateImage(context);
     CGContextRelease(context);
 
-    UIImage *inflatedImage = [[UIImage alloc] initWithCGImage:inflatedImageRef scale:scale orientation:UIImageOrientationUp];
+    UIImage *inflatedImage = [[UIImage alloc] initWithCGImage:inflatedImageRef scale:scale orientation:image.imageOrientation];
     CGImageRelease(inflatedImageRef);
     CGImageRelease(imageRef);
     

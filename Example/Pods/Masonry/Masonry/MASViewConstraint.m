@@ -76,7 +76,7 @@
     } else if ([secondViewAttribute isKindOfClass:MASViewAttribute.class]) {
         _secondViewAttribute = secondViewAttribute;
     } else {
-        NSAssert(YES, @"attempting to add unsupported attribute: %@", secondViewAttribute);
+        NSAssert(NO, @"attempting to add unsupported attribute: %@", secondViewAttribute);
     }
 }
 
@@ -206,8 +206,8 @@
 
 - (id<MASConstraint> (^)(id))equalityWithRelation:(NSLayoutRelation)relation {
     return ^id(id attribute) {
-        NSAssert(!self.hasLayoutRelation, @"Redefinition of constraint relation");
         if ([attribute isKindOfClass:NSArray.class]) {
+            NSAssert(!self.hasLayoutRelation, @"Redefinition of constraint relation");
             NSMutableArray *children = NSMutableArray.new;
             for (id attr in attribute) {
                 MASViewConstraint *viewConstraint = [self copy];
@@ -219,6 +219,8 @@
             [self.delegate constraint:self shouldBeReplacedWithConstraint:compositeConstraint];
             return compositeConstraint;
         } else {
+            BOOL layoutConstantUpdate = self.layoutRelation == relation && [attribute isKindOfClass:NSNumber.class];
+            NSAssert(!self.hasLayoutRelation || layoutConstantUpdate, @"Redefinition of constraint relation");
             self.layoutRelation = relation;
             self.secondViewAttribute = attribute;
             return self;

@@ -10,7 +10,7 @@
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 1
 #define COCOAPODS_VERSION_MINOR_AFNetworking 3
-#define COCOAPODS_VERSION_PATCH_AFNetworking 2
+#define COCOAPODS_VERSION_PATCH_AFNetworking 3
 
 // CupertinoYankee
 #define COCOAPODS_POD_AVAILABLE_CupertinoYankee
@@ -28,7 +28,7 @@
 #define COCOAPODS_POD_AVAILABLE_Masonry
 #define COCOAPODS_VERSION_MAJOR_Masonry 0
 #define COCOAPODS_VERSION_MINOR_Masonry 2
-#define COCOAPODS_VERSION_PATCH_Masonry 3
+#define COCOAPODS_VERSION_PATCH_Masonry 4
 
 // RestKit
 #define COCOAPODS_POD_AVAILABLE_RestKit
