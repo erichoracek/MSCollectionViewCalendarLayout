@@ -13,12 +13,6 @@
 
 @property (nonatomic, strong) UIView *borderView;
 
-- (UIColor *)backgroundColorSelected:(BOOL)selected;
-- (UIColor *)textColorSelected:(BOOL)selected;
-- (UIColor *)borderColor;
-
-- (void)updateColors;
-
 @end
 
 @implementation MSEventCell
@@ -42,15 +36,11 @@
         [self.contentView addSubview:self.borderView];
         
         self.title = [UILabel new];
-        self.title.backgroundColor = [UIColor clearColor];
         self.title.numberOfLines = 0;
-        self.title.font = [UIFont boldSystemFontOfSize:12.0];
         [self.contentView addSubview:self.title];
         
         self.location = [UILabel new];
-        self.location.backgroundColor = [UIColor clearColor];
         self.location.numberOfLines = 0;
-        self.location.font = [UIFont systemFontOfSize:12.0];
         [self.contentView addSubview:self.location];
         
         [self updateColors];
@@ -109,31 +99,57 @@
 - (void)setEvent:(MSEvent *)event
 {
     _event = event;
-    self.title.text = event.title;
-    self.location.text = event.location;
+    self.title.attributedText = [[NSAttributedString alloc] initWithString:event.title attributes:[self titleAttributesHighlighted:self.selected]];
+    self.location.attributedText = [[NSAttributedString alloc] initWithString:event.location attributes:[self subtitleAttributesHighlighted:self.selected]];;
 }
 
 - (void)updateColors
 {
-    self.contentView.backgroundColor = [self backgroundColorSelected:self.selected];
+    self.contentView.backgroundColor = [self backgroundColorHighlighted:self.selected];
     self.borderView.backgroundColor = [self borderColor];
-    self.title.textColor = [self textColorSelected:self.selected];
-    self.location.textColor = [self textColorSelected:self.selected];
+    self.title.textColor = [self textColorHighlighted:self.selected];
+    self.location.textColor = [self textColorHighlighted:self.selected];
 }
 
-- (UIColor *)backgroundColorSelected:(BOOL)selected
+- (NSDictionary *)titleAttributesHighlighted:(BOOL)highlighted
+{
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+    paragraphStyle.hyphenationFactor = 1.0;
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    return @{
+        NSFontAttributeName : [UIFont boldSystemFontOfSize:12.0],
+        NSForegroundColorAttributeName : [self textColorHighlighted:highlighted],
+        NSParagraphStyleAttributeName : paragraphStyle
+    };
+}
+
+- (NSDictionary *)subtitleAttributesHighlighted:(BOOL)highlighted
+{
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+    paragraphStyle.hyphenationFactor = 1.0;
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    return @{
+        NSFontAttributeName : [UIFont systemFontOfSize:12.0],
+        NSForegroundColorAttributeName : [self textColorHighlighted:highlighted],
+        NSParagraphStyleAttributeName : paragraphStyle
+    };
+}
+
+- (UIColor *)backgroundColorHighlighted:(BOOL)selected
 {
     return selected ? [UIColor colorWithHexString:@"35b1f1"] : [[UIColor colorWithHexString:@"35b1f1"] colorWithAlphaComponent:0.2];
 }
 
-- (UIColor *)textColorSelected:(BOOL)selected
+- (UIColor *)textColorHighlighted:(BOOL)selected
 {
     return selected ? [UIColor whiteColor] : [UIColor colorWithHexString:@"21729c"];
 }
 
 - (UIColor *)borderColor
 {
-    return [[self backgroundColorSelected:NO] colorWithAlphaComponent:1.0];
+    return [[self backgroundColorHighlighted:NO] colorWithAlphaComponent:1.0];
 }
 
 @end
