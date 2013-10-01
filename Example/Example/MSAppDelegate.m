@@ -30,7 +30,6 @@
     objectManager.managedObjectStore = managedObjectStore;
     
     NSEntityDescription *entity = [[managedObjectStore.managedObjectModel entitiesByName] objectForKey:@"Event"];
-    entity.managedObjectClassName = @"MSEvent";
     RKEntityMapping *eventMapping = [[RKEntityMapping alloc] initWithEntity:entity];
     [eventMapping addAttributeMappingsFromArray:@[ @"title" ]];
     [eventMapping addAttributeMappingsFromDictionary:@{
