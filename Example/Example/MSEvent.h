@@ -17,6 +17,6 @@
 @property (nonatomic, strong) NSNumber *timeToBeDecided;
 @property (nonatomic, strong) NSNumber *dateToBeDecided;
 
-- (NSDate *)day;
+- (NSDate *)day; // Derived attribute to make it easy to sort events into days by equality
 
 @end
