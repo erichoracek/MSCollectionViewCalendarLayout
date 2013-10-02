@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = 'MSCollectionViewCalendarLayout'
-  s.version      = '0.0.2'
-  s.summary      = 'UICollectionViewLayout subclass for displaying chronological data. Similar to the "Week" view in the Calendar app.'
+  s.version      = '0.1.0'
+  s.summary      = 'UICollectionViewLayout for displaying cells chronologically. Similar to the iOS Calendar app.'
   s.homepage     = 'https://github.com/monospacecollective/MSCollectionViewCalendarLayout'
   s.author       = { 'Eric Horacek' => 'eric@monospacecollective.com' }
   s.license      = 'MIT'
@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
   
   s.requires_arc = true
 
-  s.dependency 'CupertinoYankee', '~> 0.1.1'
+  s.dependency 'CupertinoYankee', '~> 0.1'
 end
