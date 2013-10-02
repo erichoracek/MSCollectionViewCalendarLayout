@@ -15,4 +15,5 @@ profile
 DerivedData
 .idea/
 *.hmap
-*.xccheckout 
+*.xccheckout
+
