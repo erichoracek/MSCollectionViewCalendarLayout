@@ -6,30 +6,39 @@
 
 # UICollectionView?
 
-`UICollectionView` is awesome. If you're unfamiliar, read Mattt Thompson's [excellent article](http://nshipster.com/uicollectionview/) about them on [NSHipster](http://nshipster.com). Everyone should use them (yes, even instead of good ol' `UITableView`). This is especially true now that iOS 6 adoption is [over 85%](http://david-smith.org/iosversionstats/) (As of March, 2013). Also see [Drop iOS 5: Only support iOS 6](http://drewcrawfordapps.com/2.0/drop-ios-5-only-support-ios-6/). It's the right thing to do.
+`UICollectionView` is awesome. If you're unfamiliar, read Matt Thompson's [excellent article](http://nshipster.com/uicollectionview/) about them on [NSHipster](http://nshipster.com). Everyone should use them (yes, even instead of good ol' `UITableView`). This is especially true now that iOS 6+ adoption is [over 90%](http://david-smith.org/iosversionstats/) (As of March, 2013). It's the right thing to do.
+
+Because of how awesome `UICollectionView` is, the `UIViewController` powering the below example is incredibly thin—only about *175 lines of code*, including whitespace.
 
 # Example
 
-The example project queries the [SeatGeek](http://www.seatgeek.com) API for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`. It requires **CocoaPods** (For RestKit, Cupertino Yankee, and UIColor-Utilities). If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
-
- To set it up, just run:
-
-```bash
-$ pod install
-```
-
-in the `Example` directory, and then build and run the `Example` target in the `Example.xcworkspace` that it creates.
+The example project queries the [SeatGeek API](http://platform.seatgeek.com) for the next 1000 sport events near Denver, Colorado. It displays these events in a `UICollectionView` using `MSCollectionViewCalendarLayout`, mimicking the look and feel of the Apple Calendar iOS App. To run, build and run the `Example` target in from `Example.xcworkspace` within the `Example` directory.
 
 ## Screenshots
 
-<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Vertical.png" alt="Vertical Layout" height="578" width="330" />
-<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Horizontal.png" alt="Horizontal Layout" height="1034" width="778" />
+<!-- Github -->
+<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Vertical.png" alt="Vertical Layout" height="578" width="321" />
+<img src="https://raw.github.com/monospacecollective/MSCollectionViewCalendarLayout/master/Screenshots/Horizontal.png" alt="Horizontal Layout" height="1025" width="769" />
+
+<!-- Local -->
+<!-- <img src="Screenshots/Vertical.png" alt="Horizontal Layout" height="578" width="321" /> -->
+<!-- <img src="Screenshots/Horizontal.png" alt="Horizontal Layout" height="1025" width="769" /> -->
 
 # Usage
 
 ##CocoaPods
 
-Add `MSCollectionViewCalendarLayout` to your `Podfile` and run `$ pod install`.
+Add the following to your `Podfile` and run `$ pod install`.
+
+``` bash
+pod 'MSCollectionViewCalendarLayout'
+```
+
+ If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
+
+## Invalidating Layout
+
+If you change the content of your `MSCollectionViewCalendarLayout`, make sure to call the `invalidateLayoutCache` method. This flushes the internal caches of your `MSCollectionViewCalendarLayout`, allowing the data to be repopulated correctly.
 
 ## Section Layouts
 
@@ -40,7 +49,7 @@ On the iPhone, `MSCollectionViewCalendarLayout` defaults to tiling its day secti
 
 ## Collection View Elements
 
-`MSCollectionViewCalendarLayout` has eight different elements that you should register `UICollectionReusableView` or `UICollectionViewCell` classes for. They are as follows:
+`MSCollectionViewCalendarLayout` has nine different elements that you should register `UICollectionReusableView` and `UICollectionViewCell` classes for. They are:
 
 * **Event Cell** (`UICollectionViewCell`) – Represents your events.
 * **Day Column Header** (`UICollectionReusableView`) – Contains the day text, top aligned.
@@ -50,20 +59,17 @@ On the iPhone, `MSCollectionViewCalendarLayout` defaults to tiling its day secti
 * **Current Time Indicator** (`UICollectionReusableView`) – Displayed over the time row header, aligned at the current time.
 * **Current Time Horizontal Gridline** (`UICollectionReusableView`) – Displayed under the cells, aligned to the current time.
 * **Horizontal Gridilne** (`UICollectionReusableView`) – Displayed under the cells, aligns with its corresponding time row header.
+* **Vertical Gridilne** (`UICollectionReusableView`) – Displayed under the cells, aligns with its corresponding day column header.
 
 If you think there should be more of these, don't hesitate to add them in a pull request. To see how this is done, check the example.
 
-## Invalidating Layout
-
-If you change the content of your `MSCollectionViewCalendarLayout`, make sure to call the `invalidateLayoutCache` method. This flushes the internal caches of your `MSCollectionViewCalendarLayout`, allowing the data to be repopulated correctly.
-
-## Can I call performBatchUpdates:completion: to make suff animate?
+## Can I call performBatchUpdates:completion: to make stuff animate?
 
 Don't do this. It doesn't work properly, and is a "bag of hurt".
 
 # Requirements
 
-Requires iOS 6.0 and ARC.
+Requires iOS 6.0+ and ARC.
 
 # Contributing
 
