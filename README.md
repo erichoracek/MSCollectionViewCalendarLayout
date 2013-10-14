@@ -26,7 +26,7 @@ The example project queries the [SeatGeek API](http://platform.seatgeek.com) for
 
 # Usage
 
-##CocoaPods
+## CocoaPods
 
 Add the following to your `Podfile` and run `$ pod install`.
 
