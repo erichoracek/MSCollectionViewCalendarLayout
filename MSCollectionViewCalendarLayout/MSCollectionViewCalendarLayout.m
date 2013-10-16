@@ -732,7 +732,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     self.currentTimeHorizontalGridlineAttributes = [NSMutableDictionary new];
     
     self.hourHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80.0 : 80.0);
-    self.sectionWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 194 : 254.0);
+    self.sectionWidth = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 194.0 : 254.0);
     self.dayColumnHeaderHeight = ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 60.0 : 50.0);
     self.timeRowHeaderWidth = 56.0;
     self.currentTimeIndicatorSize = CGSizeMake(self.timeRowHeaderWidth, 10.0);
