@@ -79,6 +79,17 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
     [self.collectionViewCalendarLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:NO];
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // On iPhone, adjust width of sections on interface rotation. No necessary in horizontal layout (iPad)
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [self.collectionViewCalendarLayout invalidateLayoutCache];
+        // These are the only widths that are defined. There are more that factor into the overall width
+        self.collectionViewCalendarLayout.sectionWidth = ((UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? CGRectGetWidth(self.view.frame) : CGRectGetHeight(self.view.frame)) - self.collectionViewCalendarLayout.timeRowHeaderWidth - self.collectionViewCalendarLayout.contentMargin.right);
+        [self.collectionView reloadData];
+    }
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
