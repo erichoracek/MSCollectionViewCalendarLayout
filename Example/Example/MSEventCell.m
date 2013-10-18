@@ -37,10 +37,12 @@
         
         self.title = [UILabel new];
         self.title.numberOfLines = 0;
+        self.title.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.title];
         
         self.location = [UILabel new];
         self.location.numberOfLines = 0;
+        self.location.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.location];
         
         [self updateColors];
