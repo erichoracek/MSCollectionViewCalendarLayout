@@ -84,8 +84,8 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
     // On iPhone, adjust width of sections on interface rotation. No necessary in horizontal layout (iPad)
     if (self.collectionViewCalendarLayout.sectionLayoutType == MSSectionLayoutTypeVerticalTile) {
         [self.collectionViewCalendarLayout invalidateLayoutCache];
-        // These are the only widths that are defined. There are more that factor into the overall width
-        self.collectionViewCalendarLayout.sectionWidth = ((UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? CGRectGetWidth(self.view.frame) : CGRectGetHeight(self.view.frame)) - self.collectionViewCalendarLayout.timeRowHeaderWidth - self.collectionViewCalendarLayout.contentMargin.right);
+        // These are the only widths that are defined by default. There are more that factor into the overall width.
+        self.collectionViewCalendarLayout.sectionWidth = (CGRectGetWidth(self.collectionView.frame) - self.collectionViewCalendarLayout.timeRowHeaderWidth - self.collectionViewCalendarLayout.contentMargin.right);
         [self.collectionView reloadData];
     }
 }
