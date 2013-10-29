@@ -29,14 +29,14 @@
 #import "MSCollectionViewCalendarLayout.h"
 #import <CupertinoYankee/NSDate+CupertinoYankee.h>
 
-NSString *const MSCollectionElementKindTimeRowHeader = @"MSCollectionElementKindTimeRow";
-NSString *const MSCollectionElementKindDayColumnHeader = @"MSCollectionElementKindDayHeader";
-NSString *const MSCollectionElementKindTimeRowHeaderBackground = @"MSCollectionElementKindTimeRowHeaderBackground";
-NSString *const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectionElementKindDayColumnHeaderBackground";
-NSString *const MSCollectionElementKindCurrentTimeIndicator = @"MSCollectionElementKindCurrentTimeIndicator";
-NSString *const MSCollectionElementKindCurrentTimeHorizontalGridline = @"MSCollectionElementKindCurrentTimeHorizontalGridline";
-NSString *const MSCollectionElementKindVerticalGridline = @"MSCollectionElementKindVerticalGridline";
-NSString *const MSCollectionElementKindHorizontalGridline = @"MSCollectionElementKindHorizontalGridline";
+NSString * const MSCollectionElementKindTimeRowHeader = @"MSCollectionElementKindTimeRow";
+NSString * const MSCollectionElementKindDayColumnHeader = @"MSCollectionElementKindDayHeader";
+NSString * const MSCollectionElementKindTimeRowHeaderBackground = @"MSCollectionElementKindTimeRowHeaderBackground";
+NSString * const MSCollectionElementKindDayColumnHeaderBackground = @"MSCollectionElementKindDayColumnHeaderBackground";
+NSString * const MSCollectionElementKindCurrentTimeIndicator = @"MSCollectionElementKindCurrentTimeIndicator";
+NSString * const MSCollectionElementKindCurrentTimeHorizontalGridline = @"MSCollectionElementKindCurrentTimeHorizontalGridline";
+NSString * const MSCollectionElementKindVerticalGridline = @"MSCollectionElementKindVerticalGridline";
+NSString * const MSCollectionElementKindHorizontalGridline = @"MSCollectionElementKindHorizontalGridline";
 
 NSUInteger const MSCollectionMinOverlayZ = 1000.0; // Allows for 900 items in a sectio without z overlap issues
 NSUInteger const MSCollectionMinCellZ = 100.0;  // Allows for 100 items in a section's background
