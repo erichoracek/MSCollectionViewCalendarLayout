@@ -9,8 +9,7 @@
 #import "MSCalendarViewController.h"
 #import "MSCollectionViewCalendarLayout.h"
 #import "MSEvent.h"
-
-// Collection View
+// Collection View Reusable Views
 #import "MSGridline.h"
 #import "MSTimeRowHeaderBackground.h"
 #import "MSDayColumnHeaderBackground.h"
@@ -28,8 +27,6 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 @property (nonatomic, strong) MSCollectionViewCalendarLayout *collectionViewCalendarLayout;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-
-- (void)loadData;
 
 @end
 
@@ -175,7 +172,7 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 - (NSDate *)collectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewCalendarLayout endTimeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MSEvent *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // Sports last ~3 hours, and SeatGeek doesn't provide an end time
+    // Most sports last ~3 hours, and SeatGeek doesn't provide an end time
     return [event.start dateByAddingTimeInterval:(60 * 60 * 3)];
 }
 
