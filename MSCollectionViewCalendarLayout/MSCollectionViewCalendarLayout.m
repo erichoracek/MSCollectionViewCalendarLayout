@@ -310,9 +310,9 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     NSIndexPath *dayColumnHeaderBackgroundIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     UICollectionViewLayoutAttributes *dayColumnHeaderBackgroundAttributes = [self layoutAttributesForDecorationViewAtIndexPath:dayColumnHeaderBackgroundIndexPath ofKind:MSCollectionElementKindDayColumnHeaderBackground withItemCache:self.dayColumnHeaderBackgroundAttributes];
     // Frame
-    CGFloat dayColumnHeaderBackgroundWidth = fmaxf(self.collectionViewContentSize.width + self.collectionView.frame.size.width, self.collectionView.frame.size.width);
+    CGFloat dayColumnHeaderBackgroundWidth = self.collectionView.frame.size.width;
     CGFloat dayColumnHeaderBackgroundHeight = fmaxf(self.collectionViewContentSize.height + self.collectionView.frame.size.height, self.collectionView.frame.size.height);
-    CGFloat dayColumnHeaderBackgroundMinX = -nearbyintf(self.collectionView.frame.size.width / 2.0);
+    CGFloat dayColumnHeaderBackgroundMinX = self.collectionView.contentOffset.x;
     CGFloat dayColumnHeaderBackgroundMinY = (dayColumnHeaderMinY - dayColumnHeaderBackgroundHeight + self.dayColumnHeaderHeight);
     dayColumnHeaderBackgroundAttributes.frame = CGRectMake(dayColumnHeaderBackgroundMinX, dayColumnHeaderBackgroundMinY, dayColumnHeaderBackgroundWidth, dayColumnHeaderBackgroundHeight);
     // Floating
