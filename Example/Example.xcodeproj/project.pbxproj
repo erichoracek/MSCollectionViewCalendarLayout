@@ -10,22 +10,13 @@
 		3A71A5B916DF4BFC00AF09E5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71A5B816DF4BFC00AF09E5 /* MobileCoreServices.framework */; };
 		3A71A5BB16DF4C0200AF09E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A71A5BA16DF4C0200AF09E5 /* SystemConfiguration.framework */; };
 		3A71A5BE16DF4CBC00AF09E5 /* MSDayColumnHeaderBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A71A5BD16DF4CBC00AF09E5 /* MSDayColumnHeaderBackground.m */; };
-		3A71A5C716DFE2C200AF09E5 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C016DFE2C200AF09E5 /* Icon-72.png */; };
-		3A71A5C816DFE2C200AF09E5 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C116DFE2C200AF09E5 /* Icon-Small-50.png */; };
-		3A71A5C916DFE2C200AF09E5 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C216DFE2C200AF09E5 /* Icon-72@2x.png */; };
-		3A71A5CA16DFE2C200AF09E5 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C316DFE2C200AF09E5 /* Icon-Small-50@2x.png */; };
-		3A71A5CB16DFE2C200AF09E5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C416DFE2C200AF09E5 /* Icon-Small.png */; };
-		3A71A5CC16DFE2C200AF09E5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C516DFE2C200AF09E5 /* Icon-Small@2x.png */; };
-		3A71A5CD16DFE2C200AF09E5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A71A5C616DFE2C200AF09E5 /* Icon.png */; };
+		3A826F14182084F2001AEAA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A826F13182084F2001AEAA7 /* Assets.xcassets */; };
 		3A9EDB7116DD8FF10017C4ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EDB7016DD8FF10017C4ED /* UIKit.framework */; };
 		3A9EDB7316DD8FF10017C4ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EDB7216DD8FF10017C4ED /* Foundation.framework */; };
 		3A9EDB7516DD8FF10017C4ED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EDB7416DD8FF10017C4ED /* CoreGraphics.framework */; };
 		3A9EDB7B16DD8FF10017C4ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EDB7916DD8FF10017C4ED /* InfoPlist.strings */; };
 		3A9EDB7D16DD8FF10017C4ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDB7C16DD8FF10017C4ED /* main.m */; };
 		3A9EDB8116DD8FF10017C4ED /* MSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDB8016DD8FF10017C4ED /* MSAppDelegate.m */; };
-		3A9EDB8316DD8FF10017C4ED /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EDB8216DD8FF10017C4ED /* Default.png */; };
-		3A9EDB8516DD8FF10017C4ED /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EDB8416DD8FF10017C4ED /* Default@2x.png */; };
-		3A9EDB8716DD8FF10017C4ED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EDB8616DD8FF10017C4ED /* Default-568h@2x.png */; };
 		3A9EDB9416DD913A0017C4ED /* MSCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDB9316DD913A0017C4ED /* MSCalendarViewController.m */; };
 		3A9EDB9916DD938A0017C4ED /* MSGridline.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDB9816DD938A0017C4ED /* MSGridline.m */; };
 		3A9EDB9C16DD94940017C4ED /* MSTimeRowHeaderBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EDB9B16DD94940017C4ED /* MSTimeRowHeaderBackground.m */; };
@@ -45,13 +36,7 @@
 		3A71A5BA16DF4C0200AF09E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3A71A5BC16DF4CBC00AF09E5 /* MSDayColumnHeaderBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDayColumnHeaderBackground.h; sourceTree = "<group>"; };
 		3A71A5BD16DF4CBC00AF09E5 /* MSDayColumnHeaderBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDayColumnHeaderBackground.m; sourceTree = "<group>"; };
-		3A71A5C016DFE2C200AF09E5 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		3A71A5C116DFE2C200AF09E5 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		3A71A5C216DFE2C200AF09E5 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
-		3A71A5C316DFE2C200AF09E5 /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
-		3A71A5C416DFE2C200AF09E5 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		3A71A5C516DFE2C200AF09E5 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		3A71A5C616DFE2C200AF09E5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		3A826F13182084F2001AEAA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A9EDB6D16DD8FF10017C4ED /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9EDB7016DD8FF10017C4ED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A9EDB7216DD8FF10017C4ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -62,9 +47,6 @@
 		3A9EDB7E16DD8FF10017C4ED /* Example-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-Prefix.pch"; sourceTree = "<group>"; };
 		3A9EDB7F16DD8FF10017C4ED /* MSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSAppDelegate.h; sourceTree = "<group>"; };
 		3A9EDB8016DD8FF10017C4ED /* MSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MSAppDelegate.m; sourceTree = "<group>"; };
-		3A9EDB8216DD8FF10017C4ED /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		3A9EDB8416DD8FF10017C4ED /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		3A9EDB8616DD8FF10017C4ED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3A9EDB9216DD913A0017C4ED /* MSCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSCalendarViewController.h; sourceTree = "<group>"; };
 		3A9EDB9316DD913A0017C4ED /* MSCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSCalendarViewController.m; sourceTree = "<group>"; };
 		3A9EDB9716DD938A0017C4ED /* MSGridline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSGridline.h; sourceTree = "<group>"; };
@@ -107,39 +89,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A0E714416DF409100DCF90A /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				3A71A5CE16DFE2C800AF09E5 /* Icon */,
-				3A71A5CF16DFE2CD00AF09E5 /* Default */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
-		3A71A5CE16DFE2C800AF09E5 /* Icon */ = {
-			isa = PBXGroup;
-			children = (
-				3A71A5C016DFE2C200AF09E5 /* Icon-72.png */,
-				3A71A5C116DFE2C200AF09E5 /* Icon-Small-50.png */,
-				3A71A5C216DFE2C200AF09E5 /* Icon-72@2x.png */,
-				3A71A5C316DFE2C200AF09E5 /* Icon-Small-50@2x.png */,
-				3A71A5C416DFE2C200AF09E5 /* Icon-Small.png */,
-				3A71A5C516DFE2C200AF09E5 /* Icon-Small@2x.png */,
-				3A71A5C616DFE2C200AF09E5 /* Icon.png */,
-			);
-			name = Icon;
-			sourceTree = "<group>";
-		};
-		3A71A5CF16DFE2CD00AF09E5 /* Default */ = {
-			isa = PBXGroup;
-			children = (
-				3A9EDB8216DD8FF10017C4ED /* Default.png */,
-				3A9EDB8416DD8FF10017C4ED /* Default@2x.png */,
-				3A9EDB8616DD8FF10017C4ED /* Default-568h@2x.png */,
-			);
-			name = Default;
-			sourceTree = "<group>";
-		};
 		3A9EDB6416DD8FF10017C4ED = {
 			isa = PBXGroup;
 			children = (
@@ -184,7 +133,7 @@
 				3A9EDB9516DD92E40017C4ED /* View Controllers */,
 				3A9EDBA716DDA5450017C4ED /* Collection View Cells */,
 				3A9EDB9616DD92EB0017C4ED /* Collection View Reusable Views */,
-				3A0E714416DF409100DCF90A /* Images */,
+				3A826F13182084F2001AEAA7 /* Assets.xcassets */,
 				3A9EDB7716DD8FF10017C4ED /* Supporting Files */,
 			);
 			path = Example;
@@ -281,6 +230,11 @@
 				CLASSPREFIX = MS;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Monospace Ltd";
+				TargetAttributes = {
+					3A9EDB6C16DD8FF10017C4ED = {
+						DevelopmentTeam = 9638K94DUG;
+					};
+				};
 			};
 			buildConfigurationList = 3A9EDB6816DD8FF10017C4ED /* Build configuration list for PBXProject "Example" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -305,16 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A9EDB7B16DD8FF10017C4ED /* InfoPlist.strings in Resources */,
-				3A9EDB8316DD8FF10017C4ED /* Default.png in Resources */,
-				3A9EDB8516DD8FF10017C4ED /* Default@2x.png in Resources */,
-				3A9EDB8716DD8FF10017C4ED /* Default-568h@2x.png in Resources */,
-				3A71A5C716DFE2C200AF09E5 /* Icon-72.png in Resources */,
-				3A71A5C816DFE2C200AF09E5 /* Icon-Small-50.png in Resources */,
-				3A71A5C916DFE2C200AF09E5 /* Icon-72@2x.png in Resources */,
-				3A71A5CA16DFE2C200AF09E5 /* Icon-Small-50@2x.png in Resources */,
-				3A71A5CB16DFE2C200AF09E5 /* Icon-Small.png in Resources */,
-				3A71A5CC16DFE2C200AF09E5 /* Icon-Small@2x.png in Resources */,
-				3A71A5CD16DFE2C200AF09E5 /* Icon.png in Resources */,
+				3A826F14182084F2001AEAA7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,12 +339,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -424,7 +369,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
@@ -440,12 +385,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -463,12 +408,11 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -476,10 +420,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6ADF134BF2C64AFAB7EFE53A /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				INFOPLIST_FILE = "Example/Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -488,11 +437,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6ADF134BF2C64AFAB7EFE53A /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Example-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "Example/Example-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
