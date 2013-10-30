@@ -21,7 +21,7 @@
 // MSCollectionViewCalendarLayout
 #define COCOAPODS_POD_AVAILABLE_MSCollectionViewCalendarLayout
 #define COCOAPODS_VERSION_MAJOR_MSCollectionViewCalendarLayout 0
-#define COCOAPODS_VERSION_MINOR_MSCollectionViewCalendarLayout 0
+#define COCOAPODS_VERSION_MINOR_MSCollectionViewCalendarLayout 1
 #define COCOAPODS_VERSION_PATCH_MSCollectionViewCalendarLayout 2
 
 // Masonry

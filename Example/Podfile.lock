@@ -2,8 +2,8 @@ PODS:
   - AFNetworking (1.3.3)
   - CupertinoYankee (0.1.1)
   - Masonry (0.2.4)
-  - MSCollectionViewCalendarLayout (0.0.2):
-    - CupertinoYankee (~> 0.1.1)
+  - MSCollectionViewCalendarLayout (0.1.2):
+    - CupertinoYankee (~> 0.1)
   - RestKit (0.20.3):
     - RestKit/Core
   - RestKit/Core (0.20.3):
@@ -38,10 +38,10 @@ SPEC CHECKSUMS:
   AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b
   CupertinoYankee: 0e16738f844aae256bc4cf2cc7a79fdd8b08b68a
   Masonry: 73df2f346bd1a0044dc9de969aa45aea2f8a9bd8
-  MSCollectionViewCalendarLayout: 168ee1d253f9f7e5e77441d628f6dda4f3d2c1d2
+  MSCollectionViewCalendarLayout: 80ab8a18c208a99954031f9484aa27f0b88b47be
   RestKit: 1f181c180105a92f11ec4f6cd7de37625e516d83
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
   TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
   UIColor-Utilities: a392783be1b72e5d5ad9ae450ef2280239441bc8
 
-COCOAPODS: 0.25.0
+COCOAPODS: 0.26.2
