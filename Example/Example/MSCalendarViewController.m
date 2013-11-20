@@ -97,11 +97,11 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 - (void)loadData
 {
     [[RKObjectManager sharedManager] getObjectsAtPath:@"events" parameters:@{
-        @"lat" : @39.750,
-        @"lon" : @(-104.984),
-        @"range" : @"10mi",
-        @"taxonomies.name" : @"sports",
-        @"per_page" : @500
+        @"lat" : @(39.750),             // Denver latitude
+        @"lon" : @(-104.984),           // Denver longitude
+        @"range" : @"10mi",             // 10mi search radius
+        @"taxonomies.name" : @"sports", // Only "sports" taxonomies
+        @"per_page" : @500              // Up to 500 results
     } success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         NSLog(@"Successfully loaded %@ events", @(mappingResult.count));
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -178,7 +178,7 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 - (NSDate *)currentTimeComponentsForCollectionView:(UICollectionView *)collectionView layout:(MSCollectionViewCalendarLayout *)collectionViewCalendarLayout
 {
-    return [NSDate date];
+    return [[NSDate date] dateByAddingTimeInterval:(60 * 60 * 36)];
 }
 
 @end
