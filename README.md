@@ -30,11 +30,11 @@ The example project queries the [SeatGeek API](http://platform.seatgeek.com) for
 
 Add the following to your `Podfile` and run `$ pod install`.
 
-``` bash
+``` ruby
 pod 'MSCollectionViewCalendarLayout'
 ```
 
- If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
+If you don't have CocoaPods installed, you can learn how to do so [here](http://cocoapods.org).
 
 ## Invalidating Layout
 
