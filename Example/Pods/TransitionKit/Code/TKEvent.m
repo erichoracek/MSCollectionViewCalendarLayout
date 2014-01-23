@@ -39,9 +39,9 @@ static NSString *TKDescribeSourceStates(NSArray *states)
 @property (nonatomic, copy, readwrite) NSString *name;
 @property (nonatomic, copy, readwrite) NSArray *sourceStates;
 @property (nonatomic, strong, readwrite) TKState *destinationState;
-@property (nonatomic, copy) BOOL (^shouldFireEventBlock)(TKEvent *event, TKStateMachine *stateMachine);
-@property (nonatomic, copy) void (^willFireEventBlock)(TKEvent *event, TKStateMachine *stateMachine);
-@property (nonatomic, copy) void (^didFireEventBlock)(TKEvent *event, TKStateMachine *stateMachine);
+@property (nonatomic, copy) BOOL (^shouldFireEventBlock)(TKEvent *, TKTransition *);
+@property (nonatomic, copy) void (^willFireEventBlock)(TKEvent *, TKTransition *);
+@property (nonatomic, copy) void (^didFireEventBlock)(TKEvent *, TKTransition *);
 @end
 
 @implementation TKEvent

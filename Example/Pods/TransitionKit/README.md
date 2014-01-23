@@ -1,11 +1,13 @@
 TransitionKit
 =============
 
-[![Build Status](https://travis-ci.org/blakewatters/TransitionKit.png?branch=master,development)](https://travis-ci.org/blakewatters/TransitionKit)
+[![Build Status](https://travis-ci.org/blakewatters/TransitionKit.png?branch=master,development)](https://travis-ci.org/blakewatters/TransitionKit) 
+![Pod Version](http://cocoapod-badges.herokuapp.com/v/TransitionKit/badge.png) 
+![Pod Platform](http://cocoapod-badges.herokuapp.com/p/TransitionKit/badge.png)
 
 **A simple, elegantly designed block based API for implementing State Machines in Objective-C**
 
-TransitionKit is a small Cocoa library that provides an API for implementing a state machine in Objective C. It is full-featured, completely documented, and very thoroughly unit tested. State machines are a great way to manage complexity in your application and TransitionKit provides you with a great way to take advantage of a state machine in your next iOS or Mac OS X application.
+TransitionKit is a small Cocoa library that provides an API for implementing a state machine in Objective C. It is full-featured, completely documented, and very thoroughly unit tested. State machines are a great way to manage complexity in your application and TransitionKit provides you with an elegant API for implementing state machines in your next iOS or Mac OS X application.
 
 ### Features
 
@@ -13,6 +15,7 @@ TransitionKit is a small Cocoa library that provides an API for implementing a s
 * States and Events support a thorough set of block based callbacks for responding to state transitions.
 * States, Events, and State Machines are NSCopying and NSCoding compliant, enabling easy integration with archiving and copying in your custom classes.
 * Strongly enforced. The state machine includes numerous runtime checks for misconfigurations, making it easy to debug and trust your state machines.
+* Transitions support the inclusion of arbitrary user data via a `userInfo` dictionary, making it easy to broadcast metadata across callbacks.
 * Completely Documented. The entire library is marked up with Appledoc.
 * Thorougly unit tested. You know it works and can make changes with confidence.
 * Lightweight. TransitionKit has no dependencies beyond the Foundation library and works on iOS and Mac OS X.
@@ -61,19 +64,19 @@ The following example is a simple state machine that models the state of a Messa
 TKStateMachine *inboxStateMachine = [TKStateMachine new];
 
 TKState *unread = [TKState stateWithName:@"Unread"];
-[unread setDidEnterStateBlock:^(TKState *state, TKStateMachine *stateMachine) {
+[unread setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
     [self incrementUnreadCount];
 }];
 TKState *read = [TKState stateWithName:@"Read"];
-[read setDidExitStateBlock:^(TKState *state, TKStateMachine *stateMachine) {
+[read setDidExitStateBlock:^(TKState *state, TKTransition *transition) {
     [self decrementUnreadCount];
 }];
 TKState *deleted = [TKState stateWithName:@"Deleted"];
-[deleted setDidEnterStateBlock:^(TKState *state, TKStateMachine *stateMachine) {
+[deleted setDidEnterStateBlock:^(TKState *state, TKTransition *transition) {
     [self moveMessageToTrash];
 }];
 
-[inboxStateMachine addStatesFromArry:@[ unread, read, deleted ]];
+[inboxStateMachine addStatesFromArray:@[ unread, read, deleted ]];
 inboxStateMachine.initialState = unread;
 
 TKEvent *viewMessage = [TKEvent eventWithName:@"View Message" transitioningFromStates:@[ unread ] toState:read];
@@ -96,7 +99,7 @@ success = [inboxStateMachine fireEvent:@"Mark as Unread" error:&error]; // YES
 success = [inboxStateMachine canFireEvent:@"Mark as Unread"]; // NO
 
 // Error. Cannot mark an Unread message as Unread
-success = [inboxStateMachine fireEvent:@"Mark as Unread" error:&error]; // NO
+success = [inboxStateMachine fireEvent:@"Mark as Unread" userInfo:nil error:&error]; // NO
 
 // error is an TKInvalidTransitionError with a descriptive error message and failure reason
 ```

@@ -3,7 +3,7 @@
 Masonry is a light-weight layout framework which wraps AutoLayout with a nicer syntax. Masonry has its own layout DSL which provides a chainable way of describing your NSLayoutConstraints which results in layout code that is more concise and readable.
 Masonry supports iOS and Mac OSX.
 
-For examples take a look at the **Masonry iOS Examples** project in the Masonry workspace.
+For examples take a look at the **Masonry iOS Examples** project in the Masonry workspace. You will need to run `pod install` after downloading.
 
 ## Whats wrong with NSLayoutConstraints?
 
@@ -170,7 +170,7 @@ make.top.equalTo(label.mas_top).with.priority(600);
 
 ## Composition, composition, composition
 
-Masonry also gives you a few convenience methods which create mutliple constraints at the same time. These are called MASCompositeConstraints
+Masonry also gives you a few convenience methods which create multiple constraints at the same time. These are called MASCompositeConstraints
 
 #### edges
 
@@ -204,13 +204,16 @@ make.center.equalTo(superview).centerOffset(CGPointMake(-5, 10))
 
 ## Hold on for dear life
 
-Sometimes you need to reference constraints so you can modify them at a later stage. This lets you animate or remove/replace constraints.
+Sometimes you need modify existing constraints inorder to animate or remove/replace constraints.
+In Masonry there are two common approaches for updating constraints.
+
+#### 1. References
 You can hold on to a reference of a particular constraint by assigning the result of a constraint make expression to a local variable or a class property.
-You could also reference multiple constraints by storing them away in an array. You can see a demo of this in the animation example in **Masonry iOS Examples** project.
+You could also reference multiple constraints by storing them away in an array.
 
 ```obj-c
 // in public/private interface
-@property (nonatomic, strong) id<MASConstraint> topConstraint;
+@property (nonatomic, strong) MASConstraint *topConstraint;
 
 ...
 
@@ -224,6 +227,28 @@ You could also reference multiple constraints by storing them away in an array. 
 // then later you can call
 [self.topConstraint uninstall];
 ```
+
+#### 2. mas_updateConstraints
+Alternatively if you are only updating the constant value of the constraint you can use the convience method `mas_updateConstraints` instead of `mas_makeConstraints`
+
+```
+// this is Apple's recommended place for adding/updating constraints
+// this method can get called multiple times in response to setNeedsUpdateConstraints
+// which can be called by UIKit internally or in your code if you need to trigger an update to your constraints
+- (void)updateConstraints {
+    [super updateConstraints];
+
+    [self.growingButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self);
+        make.width.equalTo(@(self.buttonSize.width)).priorityLow();
+        make.height.equalTo(@(self.buttonSize.height)).priorityLow();
+        make.width.lessThanOrEqualTo(self);
+        make.height.lessThanOrEqualTo(self);
+    }];
+}
+```
+
+You can find more detailed examples of both approaches in the **Masonry iOS Examples** project.
 
 ## When the ^&*!@ hits the fan!
 

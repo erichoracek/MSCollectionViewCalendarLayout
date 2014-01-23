@@ -10,7 +10,11 @@
 #import "MASConstraint.h"
 #import "MASLayoutConstraint.h"
 
-@interface MASViewConstraint : NSObject <MASConstraint, NSCopying>
+/**
+ *  A single constraint.
+ *  Contains the attributes neccessary for creating a NSLayoutConstraint and adding it to the appropriate view
+ */
+@interface MASViewConstraint : MASConstraint <NSCopying>
 
 /**
  *	First item/view and first attribute of the NSLayoutConstraint

@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class TKState, TKStateMachine;
+@class TKState, TKTransition;
 
 /**
  The `TKEvent` class describes an event within a state machine that causes a transition between states. Each event has a descriptive name and specifies the state that the machine will transition into after the event has been fired. Events can optionally be constrained to a set of source states that the machine must be in for the event to fire.
@@ -68,22 +68,22 @@
 /**
  Sets a block to be executed in order to determines if an event should be fired. If the block returns `YES`, then the event will be permitted to fire.
  
- @param block The block to be executed to determine if the event can be fired. The block has a Boolean return value and accepts two arguments: the event that is being evaluated to determine if it can be fired and the state machine that the event belongs to. If the block returns `YES`, then the event can be fired.
+ @param block The block to be executed to determine if the event can be fired. The block has a Boolean return value and accepts two arguments: the event that is being evaluated to determine if it can be fired and its associated transition. If the block returns `YES`, then the event can be fired.
  */
-- (void)setShouldFireEventBlock:(BOOL (^)(TKEvent *event, TKStateMachine *stateMachine))block;
+- (void)setShouldFireEventBlock:(BOOL (^)(TKEvent *event, TKTransition *transition))block;
 
 /**
  Sets a block to be executed before an event is fired, while the state machine is still in the source state.
  
- @param block The block to be executed. The block has no return value and accepts two arguments: the event that is about to be fired and the state machine that the event belongs to.
+ @param block The block to be executed. The block has no return value and accepts two arguments: the event that is about to be fired and its associated transition.
  */
-- (void)setWillFireEventBlock:(void (^)(TKEvent *event, TKStateMachine *stateMachine))block;
+- (void)setWillFireEventBlock:(void (^)(TKEvent *event, TKTransition *transition))block;
 
 /**
  Sets a block to be executed after an event is fired, when the state machine has transitioned into the destination state.
  
- @param block The block to be executed. The block has no return value and accepts two arguments: the event that has just been fired and the state machine that the event belongs to.
+ @param block The block to be executed. The block has no return value and accepts two arguments: the event that has just been fired and its associated transition.
  */
-- (void)setDidFireEventBlock:(void (^)(TKEvent *event, TKStateMachine *stateMachine))block;
+- (void)setDidFireEventBlock:(void (^)(TKEvent *event, TKTransition *transition))block;
 
 @end

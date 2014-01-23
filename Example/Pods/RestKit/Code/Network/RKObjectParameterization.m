@@ -28,6 +28,7 @@
 #import "RKMappingOperation.h"
 #import "RKMappingErrors.h"
 #import "RKPropertyInspector.h"
+#import "RKValueTransformers.h"
 
 // Set Logging Component
 #undef RKLogComponent
@@ -104,10 +105,7 @@
 {
     id transformedValue = nil;
     if ([value isKindOfClass:[NSDate class]]) {
-        // Date's are not natively serializable, must be encoded as a string
-        @synchronized(mapping.objectMapping.preferredDateFormatter) {
-            transformedValue = [mapping.objectMapping.preferredDateFormatter stringForObjectValue:value];
-        }
+        [mapping.objectMapping.valueTransformer transformValue:value toValue:&transformedValue ofClass:[NSString class] error:nil];
     } else if ([value isKindOfClass:[NSDecimalNumber class]]) {
         // Precision numbers are serialized as strings to work around Javascript notation limits
         transformedValue = [(NSDecimalNumber *)value stringValue];
@@ -117,6 +115,9 @@
     } else if ([value isKindOfClass:[NSOrderedSet class]]) {
         // NSOrderedSets are not natively serializable, so let's just turn it into an NSArray
         transformedValue = [value array];
+    } else if (value == nil) {
+        // Serialize nil values as null
+        transformedValue = [NSNull null];
     } else {
         Class propertyClass = RKPropertyInspectorGetClassForPropertyAtKeyPathOfObject(mapping.sourceKeyPath, operation.sourceObject);
         if ([propertyClass isSubclassOfClass:NSClassFromString(@"__NSCFBoolean")] || [propertyClass isSubclassOfClass:NSClassFromString(@"NSCFBoolean")]) {

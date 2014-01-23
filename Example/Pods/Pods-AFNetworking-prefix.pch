@@ -5,8 +5,6 @@
 #import "Pods-environment.h"
 #import <Availability.h>
 
-#define _AFNETWORKING_PIN_SSL_CERTIFICATES_
-
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
   #import <SystemConfiguration/SystemConfiguration.h>
   #import <MobileCoreServices/MobileCoreServices.h>

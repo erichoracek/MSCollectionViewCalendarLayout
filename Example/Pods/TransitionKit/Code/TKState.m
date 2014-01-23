@@ -22,10 +22,10 @@
 
 @interface TKState ()
 @property (nonatomic, copy, readwrite) NSString *name;
-@property (nonatomic, copy) void (^willEnterStateBlock)(TKState *state, TKStateMachine *stateMachine);
-@property (nonatomic, copy) void (^didEnterStateBlock)(TKState *state, TKStateMachine *stateMachine);
-@property (nonatomic, copy) void (^willExitStateBlock)(TKState *state, TKStateMachine *stateMachine);
-@property (nonatomic, copy) void (^didExitStateBlock)(TKState *state, TKStateMachine *stateMachine);
+@property (nonatomic, copy) void (^willEnterStateBlock)(TKState *, TKTransition *);
+@property (nonatomic, copy) void (^didEnterStateBlock)(TKState *, TKTransition *);
+@property (nonatomic, copy) void (^willExitStateBlock)(TKState *, TKTransition *);
+@property (nonatomic, copy) void (^didExitStateBlock)(TKState *, TKTransition *);
 @end
 
 @implementation TKState

@@ -24,5 +24,6 @@
 #import "TKStateMachine.h"
 #import "TKEvent.h"
 #import "TKState.h"
+#import "TKTransition.h"
 
 #endif

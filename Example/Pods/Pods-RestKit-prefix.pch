@@ -3,19 +3,19 @@
 #endif
 
 #import "Pods-environment.h"
-#ifdef __OBJC__
-#import <CoreData/CoreData.h>
-#endif /* __OBJC__*/
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
+    #import <CoreData/CoreData.h>
+#endif
 
 
-#ifdef __OBJC__
-#import <CoreData/CoreData.h>
-#endif /* __OBJC__*/
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
+    #import <CoreData/CoreData.h>
+#endif
 
 
-#ifdef __OBJC__
-#import <CoreData/CoreData.h>
-#endif /* __OBJC__*/
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
+    #import <CoreData/CoreData.h>
+#endif
 
 
 #import <Availability.h>
@@ -33,12 +33,12 @@
 #endif
 
 
-#ifdef __OBJC__
-#import <CoreData/CoreData.h>
-#endif /* __OBJC__*/
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
+    #import <CoreData/CoreData.h>
+#endif
 
 
-#ifdef __OBJC__
-#import <CoreData/CoreData.h>
-#endif /* __OBJC__*/
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
+    #import <CoreData/CoreData.h>
+#endif
 
