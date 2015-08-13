@@ -20,6 +20,10 @@
 
 #import <Foundation/Foundation.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  HTTP methods for requests
  */
@@ -66,14 +70,13 @@ RKRequestMethod RKRequestMethodFromString(NSString *);
 
  See http://tools.ietf.org/html/rfc2616#section-10
  */
-enum {
+typedef NS_ENUM(NSUInteger, RKStatusCodeClass) {
     RKStatusCodeClassInformational  = 100,
     RKStatusCodeClassSuccessful     = 200,
     RKStatusCodeClassRedirection    = 300,
     RKStatusCodeClassClientError    = 400,
     RKStatusCodeClassServerError    = 500
 };
-typedef NSUInteger RKStatusCodeClass;
 
 /**
  Creates a new range covering the status codes in the given class.
@@ -143,3 +146,14 @@ BOOL RKURLIsRelativeToURL(NSURL *URL, NSURL *baseURL);
  @return A string containing the relative path and query parameters.
  */
 NSString *RKPathAndQueryStringFromURLRelativeToURL(NSURL *URL, NSURL *baseURL);
+
+/**
+ *  Returns an index set of the status codes with optional response bodies
+ *
+ *  @return An index set of the status codes with optional response bodies
+ */
+NSIndexSet *RKStatusCodesOfResponsesWithOptionalBodies(void);
+
+#ifdef __cplusplus
+}
+#endif

@@ -44,13 +44,15 @@ static NSString *RKStringByReplacingUnderscoresWithBraces(NSString *string)
     RKPropertyMapping *copy = [[[self class] allocWithZone:zone] init];
     copy.sourceKeyPath = self.sourceKeyPath;
     copy.destinationKeyPath = self.destinationKeyPath;
+    copy.propertyValueClass = self.propertyValueClass;
+    copy.valueTransformer = self.valueTransformer;
     return copy;
 }
 
 - (BOOL)isEqualToMapping:(RKPropertyMapping *)otherMapping
 {
     return [otherMapping isMemberOfClass:[self class]] &&
-            [self.sourceKeyPath isEqual:otherMapping.sourceKeyPath] &&
+            (self.sourceKeyPath == otherMapping.sourceKeyPath || [self.sourceKeyPath isEqual:otherMapping.sourceKeyPath]) &&
             [self.destinationKeyPath isEqual:otherMapping.destinationKeyPath];
 }
 

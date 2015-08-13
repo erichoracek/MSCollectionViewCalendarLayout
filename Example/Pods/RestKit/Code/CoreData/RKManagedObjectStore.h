@@ -76,7 +76,7 @@
     RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
  
  */
-- (id)initWithManagedObjectModel:(NSManagedObjectModel *)managedObjectModel;
+- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)managedObjectModel NS_DESIGNATED_INITIALIZER;
 
 /**
  Initializes the receiver with an existing persistent store coordinator.
@@ -88,7 +88,7 @@
  @param persistentStoreCoordinator The persistent store coordinator with which to initialize the receiver.
  @return The receiver, initialized with the managed object model of the given persistent store coordinator and the persistent store coordinator.
  */
-- (id)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+- (instancetype)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 
 /**
  Initializes the receiver with a managed object model obtained by merging the models from all of the application's non-framework bundles.
@@ -98,7 +98,7 @@
 
  @warning Obtaining a managed object model by merging all bundles may result in an application error if versioned object models are in use.
  */
-- (id)init;
+- (instancetype)init;
 
 ///-----------------------------------------------------------------------------
 /// @name Configuring Persistent Stores
@@ -151,7 +151,7 @@
  
  As an alternative to resetting the persistent store, you may wish to consider simply deleting all managed objects out of the managed object context. If your data set is not very large, this can be a performant operation and is significantly easier to implement correctly. An example implementation for truncating all managed objects from the store is provided below:
  
-    NSBlockOpertation *operation = [NSBlockOperation blockOperationWithBlock:^{
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
         NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
         [managedObjectContext performBlockAndWait:^{
             NSError *error = nil;
@@ -162,7 +162,7 @@
                 NSArray *objects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
                 if (! objects) RKLogWarning(@"Failed execution of fetch request %@: %@", fetchRequest, error);
                 for (NSManagedObject *managedObject in objects) {
-                    [managedObjectContext deleteObject:managedObjectContext];
+                    [managedObjectContext deleteObject:managedObject];
                 }
             }
      

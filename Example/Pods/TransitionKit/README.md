@@ -2,8 +2,8 @@ TransitionKit
 =============
 
 [![Build Status](https://travis-ci.org/blakewatters/TransitionKit.png?branch=master,development)](https://travis-ci.org/blakewatters/TransitionKit) 
-![Pod Version](http://cocoapod-badges.herokuapp.com/v/TransitionKit/badge.png) 
-![Pod Platform](http://cocoapod-badges.herokuapp.com/p/TransitionKit/badge.png)
+![Pod Version](https://cocoapod-badges.herokuapp.com/v/TransitionKit/badge.png) 
+![Pod Platform](https://cocoapod-badges.herokuapp.com/p/TransitionKit/badge.png)
 
 **A simple, elegantly designed block based API for implementing State Machines in Objective-C**
 
@@ -39,7 +39,7 @@ $ touch Podfile
 $ edit Podfile
 platform :ios, '5.0' 
 # Or platform :osx, '10.7'
-pod 'TransitionKit', '~> 1.0.0'
+pod 'TransitionKit', '~> 2.0.0'
 ```
 
 Install into your project:
@@ -76,14 +76,14 @@ TKState *deleted = [TKState stateWithName:@"Deleted"];
     [self moveMessageToTrash];
 }];
 
-[inboxStateMachine addStatesFromArray:@[ unread, read, deleted ]];
+[inboxStateMachine addStates:@[ unread, read, deleted ]];
 inboxStateMachine.initialState = unread;
 
 TKEvent *viewMessage = [TKEvent eventWithName:@"View Message" transitioningFromStates:@[ unread ] toState:read];
 TKEvent *deleteMessage = [TKEvent eventWithName:@"Delete Message" transitioningFromStates:@[ read, unread ] toState:deleted];
 TKEvent *markAsUnread = [TKEvent eventWithName:@"Mark as Unread" transitioningFromStates:@[ read, deleted ] toState:unread];
 
-[inboxStateMachine addEventsFromArray:@[ viewMessage, deleteMessage, markAsUnread ]];
+[inboxStateMachine addEvents:@[ viewMessage, deleteMessage, markAsUnread ]];
 
 // Activate the state machine
 [inboxStateMachine activate];
@@ -91,10 +91,11 @@ TKEvent *markAsUnread = [TKEvent eventWithName:@"Mark as Unread" transitioningFr
 [inboxStateMachine isInState:@"Unread"]; // YES, the initial state
 
 // Fire some events
+NSDictionary *userInfo = nil;
 NSError *error = nil;
-BOOL success = [inboxStateMachine fireEvent:@"View Message" error:&error]; // YES
-success = [inboxStateMachine fireEvent:@"Delete Message" error:&error]; // YES
-success = [inboxStateMachine fireEvent:@"Mark as Unread" error:&error]; // YES
+BOOL success = [inboxStateMachine fireEvent:@"View Message" userInfo:userInfo error:&error]; // YES
+success = [inboxStateMachine fireEvent:@"Delete Message" userInfo:userInfo error:&error]; // YES
+success = [inboxStateMachine fireEvent:@"Mark as Unread" userInfo:userInfo error:&error]; // YES
 
 success = [inboxStateMachine canFireEvent:@"Mark as Unread"]; // NO
 

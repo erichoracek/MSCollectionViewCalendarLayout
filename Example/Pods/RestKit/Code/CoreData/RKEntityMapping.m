@@ -85,7 +85,7 @@ static NSArray *RKEntityIdentificationAttributeNamesForEntity(NSEntityDescriptio
 
 static NSArray *RKEntityIdentificationAttributeNames()
 {
-    return [NSArray arrayWithObjects:@"identifier", @"id", @"ID", @"URL", @"url", nil];
+    return @[@"identifier", @"id", @"ID", @"URL", @"url"];
 }
 
 static NSArray *RKArrayOfAttributesForEntityFromAttributesOrNames(NSEntityDescription *entity, NSArray *attributesOrNames)
@@ -131,8 +131,11 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 - (NSString *)transformSourceKeyPath:(NSString *)keyPath;
 @end
 
-@interface RKEntityMapping ()
+@interface RKObjectMapping ()
 @property (nonatomic, weak, readwrite) Class objectClass;
+@end
+
+@interface RKEntityMapping ()
 @property (nonatomic, strong) NSMutableArray *mutableConnections;
 @end
 
@@ -151,12 +154,12 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 {
     NSParameterAssert(entityName);
     NSParameterAssert(managedObjectStore);
-    NSEntityDescription *entity = [[managedObjectStore.managedObjectModel entitiesByName] objectForKey:entityName];
+    NSEntityDescription *entity = [managedObjectStore.managedObjectModel entitiesByName][entityName];
     NSAssert(entity, @"Unable to find an Entity with the name '%@' in the managed object model", entityName);
     return [[self alloc] initWithEntity:entity];
 }
 
-- (id)initWithEntity:(NSEntityDescription *)entity
+- (instancetype)initWithEntity:(NSEntityDescription *)entity
 {
     NSAssert(entity, @"Cannot initialize an RKEntityMapping without an entity. Maybe you want RKObjectMapping instead?");
     Class objectClass = NSClassFromString([entity managedObjectClassName]);
@@ -171,7 +174,7 @@ static BOOL entityIdentificationInferenceEnabled = YES;
     return self;
 }
 
-- (id)initWithClass:(Class)objectClass
+- (instancetype)initWithClass:(Class)objectClass
 {
     self = [super initWithClass:objectClass];
     if (self) {
@@ -187,7 +190,9 @@ static BOOL entityIdentificationInferenceEnabled = YES;
     copy.entity = self.entity;
     copy.identificationAttributes = self.identificationAttributes;
     copy.identificationPredicate = self.identificationPredicate;
+    copy.identificationPredicateBlock = self.identificationPredicateBlock;
     copy.deletionPredicate = self.deletionPredicate;
+    copy.modificationAttribute = self.modificationAttribute;
     copy.mutableConnections = [NSMutableArray array];
     
     for (RKConnectionDescription *connection in self.connections) {
@@ -210,7 +215,9 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 
 - (RKConnectionDescription *)connectionForRelationship:(id)relationshipOrName
 {
-    NSAssert([relationshipOrName isKindOfClass:[NSString class]] || [relationshipOrName isKindOfClass:[NSRelationshipDescription class]], @"Relationship specifier must be a name or a relationship description");
+    if (!([relationshipOrName isKindOfClass:[NSString class]] || [relationshipOrName isKindOfClass:[NSRelationshipDescription class]])) {
+        [NSException raise:NSInvalidArgumentException format:@"Relationship specifier must be a name or a relationship description"];
+    }
     NSString *relationshipName = [relationshipOrName isKindOfClass:[NSRelationshipDescription class]] ? [(NSRelationshipDescription *)relationshipOrName name] : relationshipOrName;
     for (RKConnectionDescription *connection in self.connections) {
         if ([[connection.relationship name] isEqualToString:relationshipName]) {
@@ -222,9 +229,9 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 
 - (void)addConnection:(RKConnectionDescription *)connection
 {
-    NSParameterAssert(connection);
+    if (! connection) [NSException raise:NSInvalidArgumentException format:@"connection cannot be nil."];
     RKConnectionDescription *existingConnection = [self connectionForRelationship:connection.relationship];
-    NSAssert(existingConnection == nil, @"Cannot add connection: An existing connection already exists for the '%@' relationship.", connection.relationship.name);
+    if (existingConnection) [NSException raise:NSInternalInconsistencyException format:@"Cannot add connection: An existing connection already exists for the '%@' relationship.", connection.relationship.name];
     NSAssert(self.mutableConnections, @"self.mutableConnections should not be nil");
     [self.mutableConnections addObject:connection];
 }
@@ -252,7 +259,7 @@ static BOOL entityIdentificationInferenceEnabled = YES;
         NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:[connectionSpecifier count]];
         for (NSString *sourceAttribute in connectionSpecifier) {
             NSString *destinationAttribute = [self transformSourceKeyPath:sourceAttribute];
-            [attributes setObject:destinationAttribute forKey:sourceAttribute];
+            attributes[sourceAttribute] = destinationAttribute;
         }
         connection = [[RKConnectionDescription alloc] initWithRelationship:relationship attributes:attributes];
     } else if ([connectionSpecifier isKindOfClass:[NSDictionary class]]) {
@@ -302,7 +309,7 @@ static BOOL entityIdentificationInferenceEnabled = YES;
 - (void)setModificationAttributeForName:(NSString *)attributeName
 {
     if (attributeName) {
-        NSAttributeDescription *attribute = [[self.entity attributesByName] objectForKey:attributeName];
+        NSAttributeDescription *attribute = [self.entity attributesByName][attributeName];
         if (!attribute) [NSException raise:NSInvalidArgumentException format:@"No attribute with the name '%@' was found in the '%@' entity.", attributeName, self.entity.name];
         self.modificationAttribute = attribute;
     } else {

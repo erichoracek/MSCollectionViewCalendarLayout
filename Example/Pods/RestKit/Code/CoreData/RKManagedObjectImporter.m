@@ -48,7 +48,7 @@
 
 @implementation RKManagedObjectImporter
 
-- (id)initWithManagedObjectModel:(NSManagedObjectModel *)managedObjectModel storePath:(NSString *)storePath
+- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)managedObjectModel storePath:(NSString *)storePath
 {
     NSParameterAssert(managedObjectModel);
     NSParameterAssert(storePath);
@@ -80,7 +80,7 @@
     return self;
 }
 
-- (id)initWithPersistentStore:(NSPersistentStore *)persistentStore
+- (instancetype)initWithPersistentStore:(NSPersistentStore *)persistentStore
 {
     NSParameterAssert(persistentStore);
 
@@ -109,7 +109,7 @@
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:[NSString stringWithFormat:@"%@ Failed to call designated initializer. Invoke initWithManagedObjectModel:storePath: instead.",
@@ -239,7 +239,7 @@
 
     NSUInteger aggregateObjectCount = 0;
     for (NSString *entry in entries) {
-        NSUInteger objectCount = [self importObjectsFromFileAtPath:path withMapping:mapping keyPath:keyPath error:&localError];
+        NSUInteger objectCount = [self importObjectsFromFileAtPath:[path stringByAppendingPathComponent:entry] withMapping:mapping keyPath:keyPath error:&localError];
         if (objectCount == NSNotFound) {
             if (error) *error = localError;
             return NSNotFound;

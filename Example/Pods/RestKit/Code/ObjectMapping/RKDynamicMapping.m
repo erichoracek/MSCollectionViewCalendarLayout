@@ -28,16 +28,18 @@
 
 @interface RKDynamicMapping ()
 @property (nonatomic, strong) NSMutableArray *mutableMatchers;
+@property (nonatomic, strong) NSArray *possibleObjectMappings;
 @property (nonatomic, copy) RKObjectMapping *(^objectMappingForRepresentationBlock)(id representation);
 @end
 
 @implementation RKDynamicMapping
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
         self.mutableMatchers = [NSMutableArray new];
+        self.possibleObjectMappings = [NSArray new];
     }
 
     return self;
@@ -50,7 +52,7 @@
 
 - (NSArray *)objectMappings
 {
-    return [self.mutableMatchers valueForKey:@"objectMapping"];
+    return self.possibleObjectMappings;
 }
 
 - (void)addMatcher:(RKObjectMappingMatcher *)matcher
@@ -61,13 +63,29 @@
         [self.mutableMatchers insertObject:matcher atIndex:0];
     } else {
         [self.mutableMatchers addObject:matcher];
+
+        NSArray *newPossibleMappings = [matcher possibleObjectMappings];
+        if (newPossibleMappings.count > 0) {
+            self.possibleObjectMappings = [self.possibleObjectMappings arrayByAddingObjectsFromArray:newPossibleMappings];
+        }
     }
 }
 
 - (void)removeMatcher:(RKObjectMappingMatcher *)matcher
 {
     NSParameterAssert(matcher);
-    [self.mutableMatchers removeObject:matcher];
+
+    if ([self.mutableMatchers containsObject:matcher]) {
+        NSMutableArray *mappings = [self.possibleObjectMappings mutableCopy];
+        for (RKObjectMapping *mapping in [matcher possibleObjectMappings]) {
+            /* removeObject will remove *all* instances; if we have dups we just want to remove one */
+            NSUInteger idx = [mappings indexOfObject:mapping];
+            if (idx != NSNotFound)
+                [mappings removeObjectAtIndex:idx];
+        }
+        self.possibleObjectMappings = [mappings copy];
+        [self.mutableMatchers removeObject:matcher];
+    }
 }
 
 - (RKObjectMapping *)objectMappingForRepresentation:(id)representation
@@ -95,8 +113,7 @@
 
 - (BOOL)isEqualToMapping:(RKMapping *)otherMapping
 {
-    // Comparison of dynamic mappings is not currently supported
-    return NO;
+    return (self == otherMapping);
 }
 
 @end

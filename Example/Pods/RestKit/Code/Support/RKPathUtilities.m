@@ -16,7 +16,6 @@
 #import <sys/xattr.h>
 #import "RKPathUtilities.h"
 #import "RKLog.h"
-#import "RKPathMatcher.h"
 
 NSString *RKExecutableName(void);
 
@@ -24,7 +23,7 @@ NSString *RKApplicationDataDirectory(void)
 {
 #if TARGET_OS_IPHONE
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    return ([paths count] > 0) ? paths[0] : nil;
 #else
     NSFileManager *sharedFM = [NSFileManager defaultManager];
 
@@ -34,7 +33,7 @@ NSString *RKApplicationDataDirectory(void)
     NSURL *appDirectory = nil;
 
     if ([possibleURLs count] >= 1) {
-        appSupportDir = [possibleURLs objectAtIndex:0];
+        appSupportDir = possibleURLs[0];
     }
 
     if (appSupportDir) {
@@ -60,12 +59,12 @@ NSString *RKExecutableName(void)
 NSString *RKCachesDirectory(void)
 {
 #if TARGET_OS_IPHONE
-    return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    return NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
 #else
     NSString *path = nil;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     if ([paths count]) {
-        path = [[paths objectAtIndex:0] stringByAppendingPathComponent:RKExecutableName()];
+        path = [paths[0] stringByAppendingPathComponent:RKExecutableName()];
     }
 
     return path;
@@ -91,13 +90,6 @@ BOOL RKEnsureDirectoryExistsAtPath(NSString *path, NSError **error)
     }
 
     return YES;
-}
-
-NSString *RKPathFromPatternWithObject(NSString *pathPattern, id object)
-{
-    NSCAssert(object != NULL, @"Object provided is invalid; cannot create a path from a NULL object");
-    RKPathMatcher *matcher = [RKPathMatcher pathMatcherWithPattern:pathPattern];
-    return [matcher pathFromObject:object addingEscapes:NO interpolatedParameters:nil];
 }
 
 static NSDictionary *RKDictionaryOfFileExtensionsToMIMETypes()

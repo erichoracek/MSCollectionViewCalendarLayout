@@ -20,7 +20,8 @@
 
 #import "RKMacros.h"
 #import "RKMapping.h"
-#import "RKValueTransformers.h"
+
+#import <RKValueTransformers/RKValueTransformers.h>
 
 @class RKPropertyMapping, RKAttributeMapping, RKRelationshipMapping;
 @protocol RKValueTransforming;
@@ -85,7 +86,7 @@
  @param objectClass The class that the mapping targets. Cannot be `nil`.
  @return The receiver, initialized with the given class.
  */
-- (id)initWithClass:(Class)objectClass;
+- (instancetype)initWithClass:(Class)objectClass;
 
 /**
  Returns an object mapping with an `objectClass` of `NSMutableDictionary`.
@@ -105,7 +106,7 @@
 /**
  The aggregate collection of attribute and relationship mappings within this object mapping.
  */
-@property (nonatomic, strong, readonly) NSArray *propertyMappings;
+@property (nonatomic, copy, readonly) NSArray *propertyMappings;
 
 /**
  Returns the property mappings of the receiver in a dictionary, where the keys are the source key paths and the values are instances of `RKAttributeMapping` or `RKRelationshipMapping`.
@@ -127,6 +128,20 @@
  The collection of attribute mappings within this object mapping.
  */
 @property (nonatomic, readonly) NSArray *attributeMappings;
+
+/**
+ The collection of single key attribute mappings within this object mapping.
+ 
+ These are mappings where the source key path is a single key, and not a key path with multiple components.
+ */
+@property (nonatomic, readonly) NSArray *keyAttributeMappings;
+
+/**
+ The collection of key path attribute mappings within this object mapping.
+ 
+ A key path mapping is one where the source key path is actually a path with multiple components.
+ */
+@property (nonatomic, readonly) NSArray *keyPathAttributeMappings;
 
 /**
  The collection of relationship mappings within this object mapping.

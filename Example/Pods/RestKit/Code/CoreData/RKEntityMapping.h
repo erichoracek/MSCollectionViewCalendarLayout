@@ -68,7 +68,7 @@
  @param entity An entity with which to initialize the receiver.
  @returns The receiver, initialized with the given entity.
  */
-- (id)initWithEntity:(NSEntityDescription *)entity;
+- (instancetype)initWithEntity:(NSEntityDescription *)entity;
 
 /**
  A convenience initializer that creates and returns an entity mapping for the entity with the given name in
@@ -113,6 +113,13 @@
  @return The identification predicate.
  */
 @property (nonatomic, copy) NSPredicate *identificationPredicate;
+
+/**
+ An optional block which returns a predicate used to filter identified objects during mapping.
+ 
+ @return The identification predicate block.
+ */
+@property (nonatomic, copy) NSPredicate *(^identificationPredicateBlock)(NSDictionary *representation, NSManagedObjectContext *managedObjectContext);
 
 /**
  An optional attribute of the receiver's entity that can be used to detect modification of a given instance. This is used to improve the performance of mapping operations by skipping the property mappings for a given object if it is found to be not modified.

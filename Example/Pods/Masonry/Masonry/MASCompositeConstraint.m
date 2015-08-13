@@ -7,6 +7,7 @@
 //
 
 #import "MASCompositeConstraint.h"
+#import "MASConstraint+Private.h"
 
 @interface MASCompositeConstraint () <MASConstraintDelegate>
 
@@ -37,34 +38,12 @@
     [self.childConstraints replaceObjectAtIndex:index withObject:replacementConstraint];
 }
 
-#pragma mark - NSLayoutConstraint constant proxies
-
-- (MASConstraint * (^)(MASEdgeInsets))insets {
-    return ^id(MASEdgeInsets insets) {
-        self.insets = insets;
-        return self;
-    };
-}
-
-- (MASConstraint * (^)(CGFloat))offset {
-    return ^id(CGFloat offset) {
-        self.offset = offset;
-        return self;
-    };
-}
-
-- (MASConstraint * (^)(CGSize))sizeOffset {
-    return ^id(CGSize offset) {
-        self.sizeOffset = offset;
-        return self;
-    };
-}
-
-- (MASConstraint * (^)(CGPoint))centerOffset {
-    return ^id(CGPoint offset) {
-        self.centerOffset = offset;
-        return self;
-    };
+- (MASConstraint *)constraint:(MASConstraint __unused *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
+    id<MASConstraintDelegate> strongDelegate = self.delegate;
+    MASConstraint *newConstraint = [strongDelegate constraint:self addConstraintWithLayoutAttribute:layoutAttribute];
+    newConstraint.delegate = self;
+    [self.childConstraints addObject:newConstraint];
+    return newConstraint;
 }
 
 #pragma mark - NSLayoutConstraint multiplier proxies 
@@ -87,7 +66,7 @@
     };
 }
 
-#pragma mark - MASLayoutPriority proxies
+#pragma mark - MASLayoutPriority proxy
 
 - (MASConstraint * (^)(MASLayoutPriority))priority {
     return ^id(MASLayoutPriority priority) {
@@ -98,59 +77,21 @@
     };
 }
 
-- (MASConstraint * (^)())priorityLow {
-    return ^id{
-        self.priority(MASLayoutPriorityDefaultLow);
-        return self;
-    };
-}
+#pragma mark - NSLayoutRelation proxy
 
-- (MASConstraint * (^)())priorityMedium {
-    return ^id{
-        self.priority(MASLayoutPriorityDefaultMedium);
-        return self;
-    };
-}
-
-- (MASConstraint * (^)())priorityHigh {
-    return ^id{
-        self.priority(MASLayoutPriorityDefaultHigh);
-        return self;
-    };
-}
-
-#pragma mark - NSLayoutRelation proxies
-
-- (MASConstraint * (^)(id))equalTo {
-    return ^id(id attr) {
+- (MASConstraint * (^)(id, NSLayoutRelation))equalToWithRelation {
+    return ^id(id attr, NSLayoutRelation relation) {
         for (MASConstraint *constraint in self.childConstraints.copy) {
-            constraint.equalTo(attr);
+            constraint.equalToWithRelation(attr, relation);
         }
         return self;
     };
 }
 
-- (MASConstraint * (^)(id))greaterThanOrEqualTo {
-    return ^id(id attr) {
-        for (MASConstraint *constraint in self.childConstraints.copy) {
-            constraint.greaterThanOrEqualTo(attr);
-        }
-        return self;
-    };
-}
+#pragma mark - attribute chaining
 
-- (MASConstraint * (^)(id))lessThanOrEqualTo {
-    return ^id(id attr) {
-        for (MASConstraint *constraint in self.childConstraints.copy) {
-            constraint.lessThanOrEqualTo(attr);
-        }
-        return self;
-    };
-}
-
-#pragma mark - Semantic properties
-
-- (MASConstraint *)with {
+- (MASConstraint *)addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
+    [self constraint:self addConstraintWithLayoutAttribute:layoutAttribute];
     return self;
 }
 
@@ -207,6 +148,18 @@
 }
 
 #pragma mark - MASConstraint
+
+- (void)activate {
+    for (MASConstraint *constraint in self.childConstraints) {
+        [constraint activate];
+    }
+}
+
+- (void)deactivate {
+    for (MASConstraint *constraint in self.childConstraints) {
+        [constraint deactivate];
+    }
+}
 
 - (void)install {
     for (MASConstraint *constraint in self.childConstraints) {

@@ -1,5 +1,0 @@
-#include "Pods-UIColor-Utilities.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/UIColor-Utilities" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/CupertinoYankee" "${PODS_ROOT}/Headers/ISO8601DateFormatterValueTransformer" "${PODS_ROOT}/Headers/MSCollectionViewCalendarLayout" "${PODS_ROOT}/Headers/Masonry" "${PODS_ROOT}/Headers/RKValueTransformers" "${PODS_ROOT}/Headers/RestKit" "${PODS_ROOT}/Headers/RestKit/CoreData" "${PODS_ROOT}/Headers/RestKit/Network" "${PODS_ROOT}/Headers/RestKit/ObjectMapping" "${PODS_ROOT}/Headers/RestKit/Support" "${PODS_ROOT}/Headers/SOCKit" "${PODS_ROOT}/Headers/TransitionKit" "${PODS_ROOT}/Headers/UIColor-Utilities" "${PODS_ROOT}/Headers/Vendor/LibComponentLogging/Core" "${PODS_ROOT}/Headers/Vendor/LibComponentLogging/NSLog"
-OTHER_LDFLAGS = -ObjC
-PODS_ROOT = ${SRCROOT}

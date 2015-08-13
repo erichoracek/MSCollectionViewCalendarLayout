@@ -168,7 +168,7 @@ static NSDictionary *RKStatusCodesToNamesDictionary()
 
 NSString * RKStringFromStatusCode(NSInteger statusCode)
 {
-    return [RKStatusCodesToNamesDictionary() objectForKey:@(statusCode)];
+    return RKStatusCodesToNamesDictionary()[@(statusCode)];
 }
 
 
@@ -344,8 +344,13 @@ static NSDate *_parseHTTPDate(const char *buf, size_t bufLen) {
     int parsed = 0, cs = 1;
     NSDate *date = NULL;
     
+#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && (__IPHONE_OS_VERSION_MAX_ALLOWED < 70000)) || \
+(defined(MAC_OS_X_VERSION_MAX_ALLOWED) && (MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_9))
     CFGregorianDate gdate;
     memset(&gdate, 0, sizeof(CFGregorianDate));
+#else
+    NSDateComponents *gdate = [[NSDateComponents alloc] init];
+#endif
     
     {
         int _slen, _trans;
@@ -397,11 +402,29 @@ static NSDate *_parseHTTPDate(const char *buf, size_t bufLen) {
     _out: {}
     }
     
-    static CFTimeZoneRef gmtTimeZone;
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ gmtTimeZone = CFTimeZoneCreateWithTimeIntervalFromGMT(NULL, 0.0); });
     
-    if(parsed == 1) { date = [NSDate dateWithTimeIntervalSinceReferenceDate:CFGregorianDateGetAbsoluteTime(gdate, gmtTimeZone)]; }
+#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && (__IPHONE_OS_VERSION_MAX_ALLOWED < 70000)) || \
+(defined(MAC_OS_X_VERSION_MAX_ALLOWED) && (MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_9))
+    static CFTimeZoneRef gmtTimeZone;
+    dispatch_once(&onceToken, ^{
+        gmtTimeZone = CFTimeZoneCreateWithTimeIntervalFromGMT(NULL, 0.0);
+    });
+    
+    if (parsed == 1) {
+        date = [NSDate dateWithTimeIntervalSinceReferenceDate:CFGregorianDateGetAbsoluteTime(gdate, gmtTimeZone)];
+    }
+#else
+    static NSCalendar *gregorian;
+    dispatch_once(&onceToken, ^{
+        gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        gregorian.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    });
+    
+    if (parsed == 1) {
+        date = [gregorian dateFromComponents:gdate];
+    }
+#endif
     
     return(date);
 }
@@ -438,19 +461,19 @@ NSDate * RKHTTPCacheExpirationDateFromHeadersWithStatusCode(NSDictionary *header
     }
     
     // Check Pragma: no-cache
-    NSString *pragma = [headers objectForKey:@"Pragma"];
+    NSString *pragma = headers[@"Pragma"];
     if (pragma && [pragma isEqualToString:@"no-cache"]) {
         // Uncacheable response
         return nil;
     }
     
     // Define "now" based on the request
-    NSString *date = [headers objectForKey:@"Date"];
+    NSString *date = headers[@"Date"];
     // If no Date: header, define now from local clock
     NSDate *now = date ? RKDateFromHTTPDateString(date) : [NSDate date];
     
     // Look at info from the Cache-Control: max-age=n header
-    NSString *cacheControl = [[headers objectForKey:@"Cache-Control"] lowercaseString];
+    NSString *cacheControl = [headers[@"Cache-Control"] lowercaseString];
     if (cacheControl)
     {
         NSRange foundRange = [cacheControl rangeOfString:@"no-store"];
@@ -480,7 +503,7 @@ NSDate * RKHTTPCacheExpirationDateFromHeadersWithStatusCode(NSDictionary *header
     }
     
     // If not Cache-Control found, look at the Expires header
-    NSString *expires = [headers objectForKey:@"Expires"];
+    NSString *expires = headers[@"Expires"];
     if (expires) {
         NSTimeInterval expirationInterval = 0;
         NSDate *expirationDate = RKDateFromHTTPDateString(expires);
@@ -503,7 +526,7 @@ NSDate * RKHTTPCacheExpirationDateFromHeadersWithStatusCode(NSDictionary *header
     }
     
     // If no cache control defined, try some heristic to determine an expiration date
-    NSString *lastModified = [headers objectForKey:@"Last-Modified"];
+    NSString *lastModified = headers[@"Last-Modified"];
     if (lastModified) {
         NSTimeInterval age = 0;
         NSDate *lastModifiedDate = RKDateFromHTTPDateString(lastModified);
@@ -534,4 +557,15 @@ NSString *RKPathAndQueryStringFromURLRelativeToURL(NSURL *URL, NSURL *baseURL)
         NSString *pathWithPrevervedTrailingSlash = [CFBridgingRelease(CFURLCopyPath((CFURLRef)URL)) stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         return (query && [query length]) ? [NSString stringWithFormat:@"%@?%@", pathWithPrevervedTrailingSlash, query] : pathWithPrevervedTrailingSlash;
     }
+}
+
+NSIndexSet *RKStatusCodesOfResponsesWithOptionalBodies()
+{
+    NSMutableIndexSet *statusCodes = [NSMutableIndexSet indexSet];
+    [statusCodes addIndex:201];
+    [statusCodes addIndex:202];
+    [statusCodes addIndex:204];
+    [statusCodes addIndex:205];
+    [statusCodes addIndex:304];
+    return statusCodes;
 }

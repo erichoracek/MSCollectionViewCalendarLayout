@@ -1,0 +1,1 @@
+RESTKIT_OTHER_LDFLAGS = -framework "CFNetwork" -framework "CoreData" -framework "MobileCoreServices" -framework "Security" -framework "SystemConfiguration"

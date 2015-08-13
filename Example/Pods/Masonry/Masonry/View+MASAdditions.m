@@ -26,6 +26,14 @@
     return [constraintMaker install];
 }
 
+- (NSArray *)mas_remakeConstraints:(void(^)(MASConstraintMaker *make))block {
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    MASConstraintMaker *constraintMaker = [[MASConstraintMaker alloc] initWithView:self];
+    constraintMaker.removeExisting = YES;
+    block(constraintMaker);
+    return [constraintMaker install];
+}
+
 #pragma mark - NSLayoutAttribute properties
 
 - (MASViewAttribute *)mas_left {
@@ -71,6 +79,49 @@
 - (MASViewAttribute *)mas_baseline {
     return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeBaseline];
 }
+
+- (MASViewAttribute *(^)(NSLayoutAttribute))mas_attribute
+{
+    return ^(NSLayoutAttribute attr) {
+        return [[MASViewAttribute alloc] initWithView:self layoutAttribute:attr];
+    };
+}
+
+#if TARGET_OS_IPHONE
+
+- (MASViewAttribute *)mas_leftMargin {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeLeftMargin];
+}
+
+- (MASViewAttribute *)mas_rightMargin {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeRightMargin];
+}
+
+- (MASViewAttribute *)mas_topMargin {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeTopMargin];
+}
+
+- (MASViewAttribute *)mas_bottomMargin {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeBottomMargin];
+}
+
+- (MASViewAttribute *)mas_leadingMargin {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeLeadingMargin];
+}
+
+- (MASViewAttribute *)mas_trailingMargin {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeTrailingMargin];
+}
+
+- (MASViewAttribute *)mas_centerXWithinMargins {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeCenterXWithinMargins];
+}
+
+- (MASViewAttribute *)mas_centerYWithinMargins {
+    return [[MASViewAttribute alloc] initWithView:self layoutAttribute:NSLayoutAttributeCenterYWithinMargins];
+}
+
+#endif
 
 #pragma mark - associated properties
 

@@ -26,7 +26,7 @@
 
 @implementation RKMappingResult
 
-- (id)initWithDictionary:(id)dictionary
+- (instancetype)initWithDictionary:(id)dictionary
 {
     NSParameterAssert(dictionary);
     self = [self init];
@@ -65,13 +65,7 @@
 
 - (id)firstObject
 {
-    NSArray *collection = [self array];
-    NSUInteger count = [collection count];
-    if (count == 0) {
-        return nil;
-    }
-
-    return [collection objectAtIndex:0];
+    return [[self array] firstObject];
 }
 
 - (NSString *)description

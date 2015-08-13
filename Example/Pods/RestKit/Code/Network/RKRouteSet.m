@@ -30,7 +30,7 @@
 @implementation RKRouteSet
 
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -82,11 +82,12 @@
     NSAssert(![route isNamedRoute] || [self routeForName:route.name] == nil, @"Cannot add a route with the same name as an existing route.");
     if ([route isClassRoute]) {
         RKRoute *existingRoute = [self routeForClass:route.objectClass method:route.method];
-        NSAssert(existingRoute == nil || (existingRoute.method == RKRequestMethodAny && route.method != RKRequestMethodAny) || (route.method == RKRequestMethodAny && existingRoute.method != RKRequestMethodAny), @"Cannot add a route with the same class and method as an existing route.");
+        if (! (existingRoute == nil || (existingRoute.method == RKRequestMethodAny && route.method != RKRequestMethodAny) || (route.method == RKRequestMethodAny && existingRoute.method != RKRequestMethodAny))) [NSException raise:NSInternalInconsistencyException format:@"Cannot add a route with the same class and method as an existing route."];
     } else if ([route isRelationshipRoute]) {
         NSArray *routes = [self routesForRelationship:route.name ofClass:route.objectClass];
         for (RKRoute *existingRoute in routes) {
             NSAssert(existingRoute.method != route.method, @"Cannot add a relationship route with the same name and class as an existing route.");
+            (void)existingRoute;
         }
     }
     [self.routes addObject:route];

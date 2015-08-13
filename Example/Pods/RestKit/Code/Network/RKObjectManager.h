@@ -21,7 +21,14 @@
 #import "RKRouter.h"
 #import "RKPaginator.h"
 #import "RKMacros.h"
-#import "AFNetworking.h"
+
+#import <AFNetworking/AFNetworking.h>
+
+#ifdef _COREDATADEFINES_H
+#   if __has_include("RKCoreData.h")
+#       define RKCoreDataIncluded
+#   endif
+#endif
 
 @protocol RKSerialization;
 @class RKManagedObjectStore, RKObjectRequestOperation, RKManagedObjectRequestOperation,
@@ -225,7 +232,7 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  * `appropriateObjectRequestOperationWithObject:method:path:parameters:` - Used to construct all object request operations for the manager, both managed and unmanaged. Invokes either `objectRequestOperationWithRequest:success:failure:` or `managedObjectRequestOperationWithRequest:managedObjectContext:success:failure:` to construct the actual request. Provide a subclass implementation to alter behaviors for all object request operations constructed by the manager.
  * `enqueueObjectRequestOperation:` - Invoked to enqueue all operations constructed by the manager that are to be started as soon as possible. Provide a subclass implementation if you wish to work with object request operations as they are be enqueued.
  
- If you wish to more specifically customize the behavior of the lower level HTTP details, you have several options. All HTTP requests made by the `RKObjectManager` class are made with an instance of the `RKHTTPRequestOperation` class, which is a subclass of the `AFHTTPRequestOperation` class from AFNetworking. This operation class implements the `NSURLConnectionDelegate` and `NSURLConnectionDataDelegate` protocols and as such, has full access to all details of the HTTP request/response cycle exposed by `NSURLConnection`. You can provide the object manager with your own custom subclass of `RKHTTPRequestOperation` to the manager via the `setHTTPOperationClass:` method and all HTTP requests made through the manager will pass through your operation.
+ If you wish to more specifically customize the behavior of the lower level HTTP details, you have several options. All HTTP requests made by the `RKObjectManager` class are made with an instance of the `RKHTTPRequestOperation` class, which is a subclass of the `AFHTTPRequestOperation` class from AFNetworking. This operation class implements the `NSURLConnectionDelegate` and `NSURLConnectionDataDelegate` protocols and as such, has full access to all details of the HTTP request/response cycle exposed by `NSURLConnection`. You can provide the object manager with your own custom subclass of `RKHTTPRequestOperation` to the manager via the `registerRequestOperationClass:` method and all HTTP requests made through the manager will pass through your operation.
 
  You can also customize the HTTP details at the AFNetworking level by subclassing `AFHTTPClient` and using an instance of your subclassed client to initialize the manager.
  
@@ -278,7 +285,7 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @param client The AFNetworking HTTP client with which to initialize the receiver.
  @return The receiver, initialized with the given client.
  */
-- (id)initWithHTTPClient:(AFHTTPClient *)client;
+- (instancetype)initWithHTTPClient:(AFHTTPClient *)client NS_DESIGNATED_INITIALIZER;
 
 ///------------------------------------------
 /// @name Accessing Object Manager Properties
@@ -477,7 +484,7 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  
  @see `RKManagedObjectRequestOperation`
  */
-#ifdef _COREDATADEFINES_H
+#ifdef RKCoreDataIncluded
 - (RKManagedObjectRequestOperation *)managedObjectRequestOperationWithRequest:(NSURLRequest *)request
                                                          managedObjectContext:(NSManagedObjectContext *)managedObjectContext
                                                                       success:(void (^)(RKObjectRequestOperation *operation, RKMappingResult *mappingResult))success
@@ -814,7 +821,7 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
 /// @name Configuring Core Data Integration
 ///----------------------------------------
 
-#ifdef _COREDATADEFINES_H
+#ifdef RKCoreDataIncluded
 /**
  A Core Data backed object store for persisting objects that have been fetched from the Web
  */
@@ -859,6 +866,19 @@ RKMappingResult, RKRequestDescriptor, RKResponseDescriptor;
  @warning Will raise an exception if the value of the `paginationMapping` property is nil.
  */
 - (RKPaginator *)paginatorWithPathPattern:(NSString *)pathPattern;
+
+/**
+ Creates and returns a paginator object configured to paginate the collection resource accessible at the specified path pattern and the given parameters.
+ 
+ The paginator instantiated will be initialized with a URL built by appending the given pathPattern to the baseURL of the client and the given parameters if any. The response descriptors and Core Data configuration, if any, are inherited from the receiver.
+ 
+ @param pathPattern A patterned URL fragment to be appended to the baseURL of the receiver in order to construct the pattern URL with which to access the paginated collection.
+ @param parameters The parameters to be encoded and appended as the query string for the request URL. May be nil.
+ @return The newly created paginator instance.
+ @see RKPaginator
+ @warning Will raise an exception if the value of the `paginationMapping` property is nil.
+ */
+- (RKPaginator *)paginatorWithPathPattern:(NSString *)pathPattern parameters:(NSDictionary *)parameters;
 
 @end
 
