@@ -3,7 +3,7 @@
 //  MSCollectionViewCalendarLayout
 //
 //  Created by Eric Horacek on 2/18/13.
-//  Copyright (c) 2013 Monospace Ltd. All rights reserved.
+//  Copyright (c) 2015 Eric Horacek. All rights reserved.
 //
 //  This code is distributed under the terms and conditions of the MIT license.
 //

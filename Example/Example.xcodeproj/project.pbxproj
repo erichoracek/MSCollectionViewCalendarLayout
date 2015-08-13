@@ -229,7 +229,7 @@
 			attributes = {
 				CLASSPREFIX = MS;
 				LastUpgradeCheck = 0460;
-				ORGANIZATIONNAME = "Monospace Ltd";
+				ORGANIZATIONNAME = "Eric Horacek";
 				TargetAttributes = {
 					3A9EDB6C16DD8FF10017C4ED = {
 						DevelopmentTeam = 9638K94DUG;
