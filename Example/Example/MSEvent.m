@@ -19,7 +19,7 @@
 
 - (NSDate *)day
 {
-    return [self.start beginningOfDay];
+    return [[NSCalendar currentCalendar] startOfDayForDate:self.start];
 }
 
 @end
