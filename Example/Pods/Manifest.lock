@@ -3,7 +3,7 @@ PODS:
   - ISO8601DateFormatterValueTransformer (0.6.1):
     - RKValueTransformers (~> 1.1.0)
   - Masonry (0.6.2)
-  - MSCollectionViewCalendarLayout (0.1.4)
+  - MSCollectionViewCalendarLayout (0.1.5)
   - RestKit (0.25.0):
     - RestKit/Core (= 0.25.0)
   - RestKit/Core (0.25.0):
@@ -42,7 +42,7 @@ SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   ISO8601DateFormatterValueTransformer: 52da467d6ec899d6aedda8e48280ac92e8ee97e6
   Masonry: 362e8a1cc0beada4a4c4832d5e863da2a51533be
-  MSCollectionViewCalendarLayout: 560b30a0ce1d042268270e5f867590000a5b7504
+  MSCollectionViewCalendarLayout: 9c52894930d6b712951f18873618fc32c00cd4fa
   RestKit: a4fcaf3d4bb2c204679856a46d596160bf208095
   RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701
   SOCKit: c7376ac262bea9115b8f749358f762522a47d392
