@@ -364,7 +364,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
                 
                 CGFloat endHourY;
                 if (itemEndTime.day != itemStartTime.day) {
-                    endHourY = (([[NSCalendar currentCalendar] maximumRangeOfUnit:NSHourCalendarUnit].length - earliestHour) * self.hourHeight) + (itemEndTime.hour * self.hourHeight);
+                    endHourY = (([[NSCalendar currentCalendar] maximumRangeOfUnit:NSCalendarUnitHour].length - earliestHour) * self.hourHeight) + (itemEndTime.hour * self.hourHeight);
                 } else {
                     endHourY = ((itemEndTime.hour - earliestHour) * self.hourHeight);
                 }
@@ -499,7 +499,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
                 
                 CGFloat endHourY;
                 if (itemEndTime.day != itemStartTime.day) {
-                    endHourY = (([[NSCalendar currentCalendar] maximumRangeOfUnit:NSHourCalendarUnit].length - earliestHour) * self.hourHeight) + ((itemEndTime.hour) * self.hourHeight);
+                    endHourY = (([[NSCalendar currentCalendar] maximumRangeOfUnit:NSCalendarUnitHour].length - earliestHour) * self.hourHeight) + ((itemEndTime.hour) * self.hourHeight);
                 } else {
                     endHourY = ((itemEndTime.hour - earliestHour) * self.hourHeight);
                 }
@@ -752,7 +752,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     
     // Invalidate layout on minute ticks (to update the position of the current time indicator)
     NSDate *oneMinuteInFuture = [[NSDate date] dateByAddingTimeInterval:60];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:oneMinuteInFuture];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:oneMinuteInFuture];
     NSDate *nextMinuteBoundary = [[NSCalendar currentCalendar] dateFromComponents:components];
     
     // This needs to be a weak reference, otherwise we get a retain cycle
@@ -904,7 +904,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     NSInteger closestSection = NSIntegerMax;
     for (NSInteger section = 0; section < self.collectionView.numberOfSections; section++) {
         NSDate *sectionDayDate = [self.delegate collectionView:self.collectionView layout:self dayForSection:section];
-        NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:sectionDayDate];
+        NSTimeInterval timeInterval = [startOfCurrentDay timeIntervalSinceDate:sectionDayDate];
         if ((timeInterval <= 0) && ABS(timeInterval) < minTimeInterval) {
             minTimeInterval = ABS(timeInterval);
             closestSection = section;
@@ -1169,7 +1169,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
         if ([self dayForSection:section].day == itemEndTime.day) {
             itemEndTimeHour = (itemEndTime.hour + ((itemEndTime.minute > 0) ? 1 : 0));
         } else {
-            itemEndTimeHour = [[NSCalendar currentCalendar] maximumRangeOfUnit:NSHourCalendarUnit].length + (itemEndTime.hour + ((itemEndTime.minute > 0) ? 1 : 0));;
+            itemEndTimeHour = [[NSCalendar currentCalendar] maximumRangeOfUnit:NSCalendarUnitHour].length + (itemEndTime.hour + ((itemEndTime.minute > 0) ? 1 : 0));;
         }
         if (itemEndTimeHour > latestHour) {
             latestHour = itemEndTimeHour;
@@ -1193,7 +1193,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     
     NSDate *date = [self.delegate collectionView:self.collectionView layout:self dayForSection:section];
     date = [date beginningOfDay];
-    NSDateComponents *dayDateComponents = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSEraCalendarUnit) fromDate:date];
+    NSDateComponents *dayDateComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitEra) fromDate:startOfDay];
     
     [self.cachedDayDateComponents setObject:dayDateComponents forKey:@(section)];
     return dayDateComponents;
@@ -1206,7 +1206,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     }
     
     NSDate *date = [self.delegate collectionView:self.collectionView layout:self startTimeForItemAtIndexPath:indexPath];
-    NSDateComponents *itemStartTimeDateComponents = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    NSDateComponents *itemStartTimeDateComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
     
     [self.cachedStartTimeDateComponents setObject:itemStartTimeDateComponents forKey:indexPath];
     return itemStartTimeDateComponents;
@@ -1219,7 +1219,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     }
     
     NSDate *date = [self.delegate collectionView:self.collectionView layout:self endTimeForItemAtIndexPath:indexPath];
-    NSDateComponents *itemEndTime = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    NSDateComponents *itemEndTime = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
     
     [self.cachedEndTimeDateComponents setObject:itemEndTime forKey:indexPath];
     return itemEndTime;
@@ -1232,7 +1232,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     }
     
     NSDate *date = [self.delegate currentTimeComponentsForCollectionView:self.collectionView layout:self];
-    NSDateComponents *currentTime = [[NSCalendar currentCalendar] components:(NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    NSDateComponents *currentTime = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
     
     [self.cachedCurrentDateComponents setObject:currentTime forKey:@(0)];
     return currentTime;

@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name         = 'MSCollectionViewCalendarLayout'
   s.version      = '0.1.4'
   s.license      = 'MIT'
-  s.platform     = :ios, '6.0'
+  s.platform     = :ios, '8.0'
 
   s.summary      = 'UICollectionViewLayout for displaying cells chronologically. Similar to the iOS Calendar app.'
   s.homepage     = 'https://github.com/monospacecollective/MSCollectionViewCalendarLayout'
