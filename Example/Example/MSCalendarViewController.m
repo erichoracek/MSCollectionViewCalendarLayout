@@ -27,6 +27,7 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 
 @property (nonatomic, strong) MSCollectionViewCalendarLayout *collectionViewCalendarLayout;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, readonly) CGFloat layoutSectionWidth;
 
 @end
 
@@ -49,6 +50,8 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
     [self.collectionView registerClass:MSEventCell.class forCellWithReuseIdentifier:MSEventCellReuseIdentifier];
     [self.collectionView registerClass:MSDayColumnHeader.class forSupplementaryViewOfKind:MSCollectionElementKindDayColumnHeader withReuseIdentifier:MSDayColumnHeaderReuseIdentifier];
     [self.collectionView registerClass:MSTimeRowHeader.class forSupplementaryViewOfKind:MSCollectionElementKindTimeRowHeader withReuseIdentifier:MSTimeRowHeaderReuseIdentifier];
+
+    self.collectionViewCalendarLayout.sectionWidth = self.layoutSectionWidth;
     
     // These are optional. If you don't want any of the decoration views, just don't register a class for them.
     [self.collectionViewCalendarLayout registerClass:MSCurrentTimeIndicator.class forDecorationViewOfKind:MSCollectionElementKindCurrentTimeIndicator];
@@ -73,18 +76,22 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
     [self.collectionViewCalendarLayout scrollCollectionViewToClosetSectionToCurrentTimeAnimated:NO];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    // On iPhone, adjust width of sections on interface rotation. No necessary in horizontal layout (iPad)
-    if (self.collectionViewCalendarLayout.sectionLayoutType == MSSectionLayoutTypeVerticalTile) {
-        [self.collectionViewCalendarLayout invalidateLayoutCache];
-        // These are the only widths that are defined by default. There are more that factor into the overall width.
-        self.collectionViewCalendarLayout.sectionWidth = (CGRectGetWidth(self.collectionView.frame) - self.collectionViewCalendarLayout.timeRowHeaderWidth - self.collectionViewCalendarLayout.contentMargin.right);
+    // Ensure that collection view properly rotates between layouts
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.collectionViewCalendarLayout invalidateLayoutCache];
+
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        self.collectionViewCalendarLayout.sectionWidth = self.layoutSectionWidth;
+
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.collectionView reloadData];
-    }
+    }];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -107,6 +114,21 @@ NSString * const MSTimeRowHeaderReuseIdentifier = @"MSTimeRowHeaderReuseIdentifi
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"Unable to Load Events" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Continue" otherButtonTitles:nil] show];
     }];
+}
+
+- (CGFloat)layoutSectionWidth
+{
+    // Default to 254 on iPad.
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return 254.0;
+    }
+
+    // Otherwise, on iPhone, fit-to-width.
+    CGFloat width = CGRectGetWidth(self.collectionView.bounds);
+    CGFloat timeRowHeaderWidth = self.collectionViewCalendarLayout.timeRowHeaderWidth;
+    CGFloat rightMargin = self.collectionViewCalendarLayout.contentMargin.right;
+
+    return (width - timeRowHeaderWidth - rightMargin);
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
