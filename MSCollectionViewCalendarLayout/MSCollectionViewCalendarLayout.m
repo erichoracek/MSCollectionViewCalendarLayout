@@ -313,7 +313,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     NSIndexPath *dayColumnHeaderBackgroundIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     UICollectionViewLayoutAttributes *dayColumnHeaderBackgroundAttributes = [self layoutAttributesForDecorationViewAtIndexPath:dayColumnHeaderBackgroundIndexPath ofKind:MSCollectionElementKindDayColumnHeaderBackground withItemCache:self.dayColumnHeaderBackgroundAttributes];
     // Frame
-    CGFloat dayColumnHeaderBackgroundHeight = (self.dayColumnHeaderHeight + ((self.collectionView.contentOffset.y < 0.0) ? fabsf(self.collectionView.contentOffset.y) : 0.0));
+    CGFloat dayColumnHeaderBackgroundHeight = (self.dayColumnHeaderHeight + ((self.collectionView.contentOffset.y < 0.0) ? ABS(self.collectionView.contentOffset.y) : 0.0));
     dayColumnHeaderBackgroundAttributes.frame = (CGRect){self.collectionView.contentOffset, {self.collectionView.frame.size.width, dayColumnHeaderBackgroundHeight}};
     // Floating
     dayColumnHeaderBackgroundAttributes.hidden = !dayColumnHeaderFloating;
@@ -905,8 +905,8 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     for (NSInteger section = 0; section < self.collectionView.numberOfSections; section++) {
         NSDate *sectionDayDate = [self.delegate collectionView:self.collectionView layout:self dayForSection:section];
         NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:sectionDayDate];
-        if ((timeInterval <= 0) && abs(timeInterval) < minTimeInterval) {
-            minTimeInterval = abs(timeInterval);
+        if ((timeInterval <= 0) && ABS(timeInterval) < minTimeInterval) {
+            minTimeInterval = ABS(timeInterval);
             closestSection = section;
         }
     }
