@@ -27,7 +27,6 @@
 //
 
 #import "MSCollectionViewCalendarLayout.h"
-#import <CupertinoYankee/NSDate+CupertinoYankee.h>
 
 NSString * const MSCollectionElementKindTimeRowHeader = @"MSCollectionElementKindTimeRow";
 NSString * const MSCollectionElementKindDayColumnHeader = @"MSCollectionElementKindDayHeader";
@@ -851,7 +850,8 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
 
 - (NSDate *)dateForDayColumnHeaderAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[self.delegate collectionView:self.collectionView layout:self dayForSection:indexPath.section] beginningOfDay];
+    NSDate *day = [self.delegate collectionView:self.collectionView layout:self dayForSection:indexPath.section];
+    return [[NSCalendar currentCalendar] startOfDayForDate:day];
 }
 
 #pragma mark Scrolling
@@ -899,7 +899,9 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
 
 - (NSInteger)closestSectionToCurrentTime
 {
-    NSDate *currentDate = [[self.delegate currentTimeComponentsForCollectionView:self.collectionView layout:self] beginningOfDay];
+    NSDate *currentTime = [self.delegate currentTimeComponentsForCollectionView:self.collectionView layout:self];
+    NSDate *startOfCurrentDay = [[NSCalendar currentCalendar] startOfDayForDate:currentTime];
+
     NSTimeInterval minTimeInterval = CGFLOAT_MAX;
     NSInteger closestSection = NSIntegerMax;
     for (NSInteger section = 0; section < self.collectionView.numberOfSections; section++) {
@@ -1190,9 +1192,10 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     if ([self.cachedDayDateComponents objectForKey:@(section)]) {
         return [self.cachedDayDateComponents objectForKey:@(section)];
     }
-    
-    NSDate *date = [self.delegate collectionView:self.collectionView layout:self dayForSection:section];
-    date = [date beginningOfDay];
+
+    NSDate *day = [self.delegate collectionView:self.collectionView layout:self dayForSection:section];
+    NSDate *startOfDay = [[NSCalendar currentCalendar] startOfDayForDate:day];
+
     NSDateComponents *dayDateComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitEra) fromDate:startOfDay];
     
     [self.cachedDayDateComponents setObject:dayDateComponents forKey:@(section)];

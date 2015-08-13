@@ -5,6 +5,5 @@ xcodeproj 'Example'
 pod 'MSCollectionViewCalendarLayout', :path => '../'
 
 pod 'RestKit'
-pod 'CupertinoYankee'
 pod 'UIColor-HexString'
 pod 'Masonry'
