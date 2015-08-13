@@ -54,20 +54,20 @@ typedef NS_ENUM(NSUInteger, MSHeaderLayoutType) {
 
 @property (nonatomic, weak) id <MSCollectionViewDelegateCalendarLayout> delegate;
 
-@property (nonatomic, assign) CGFloat sectionWidth;
-@property (nonatomic, assign) CGFloat hourHeight;
-@property (nonatomic, assign) CGFloat dayColumnHeaderHeight;
-@property (nonatomic, assign) CGFloat timeRowHeaderWidth;
-@property (nonatomic, assign) CGSize currentTimeIndicatorSize;
-@property (nonatomic, assign) CGFloat horizontalGridlineHeight;
-@property (nonatomic, assign) CGFloat verticalGridlineWidth;
-@property (nonatomic, assign) CGFloat currentTimeHorizontalGridlineHeight;
-@property (nonatomic, assign) UIEdgeInsets sectionMargin;
-@property (nonatomic, assign) UIEdgeInsets contentMargin;
-@property (nonatomic, assign) UIEdgeInsets cellMargin;
-@property (nonatomic, assign) MSSectionLayoutType sectionLayoutType;
-@property (nonatomic, assign) MSHeaderLayoutType headerLayoutType;
-@property (nonatomic, assign) BOOL displayHeaderBackgroundAtOrigin;
+@property (nonatomic) CGFloat sectionWidth;
+@property (nonatomic) CGFloat hourHeight;
+@property (nonatomic) CGFloat dayColumnHeaderHeight;
+@property (nonatomic) CGFloat timeRowHeaderWidth;
+@property (nonatomic) CGSize currentTimeIndicatorSize;
+@property (nonatomic) CGFloat horizontalGridlineHeight;
+@property (nonatomic) CGFloat verticalGridlineWidth;
+@property (nonatomic) CGFloat currentTimeHorizontalGridlineHeight;
+@property (nonatomic) UIEdgeInsets sectionMargin;
+@property (nonatomic) UIEdgeInsets contentMargin;
+@property (nonatomic) UIEdgeInsets cellMargin;
+@property (nonatomic) MSSectionLayoutType sectionLayoutType;
+@property (nonatomic) MSHeaderLayoutType headerLayoutType;
+@property (nonatomic) BOOL displayHeaderBackgroundAtOrigin;
 
 - (NSDate *)dateForTimeRowHeaderAtIndexPath:(NSIndexPath *)indexPath;
 - (NSDate *)dateForDayColumnHeaderAtIndexPath:(NSIndexPath *)indexPath;
