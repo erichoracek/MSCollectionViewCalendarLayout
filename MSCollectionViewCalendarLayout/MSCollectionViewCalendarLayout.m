@@ -949,7 +949,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
         NSInteger earliestHour = [self earliestHour];
         NSInteger latestHour = [self latestHourForSection:section];
         CGFloat sectionColumnHeight;
-        if ((earliestHour != NSUndefinedDateComponent) && (latestHour != NSUndefinedDateComponent)) {
+        if ((earliestHour != NSDateComponentUndefined) && (latestHour != NSDateComponentUndefined)) {
             sectionColumnHeight = (self.hourHeight * (latestHour - earliestHour));
         } else {
             sectionColumnHeight = 0.0;
@@ -997,7 +997,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     NSInteger earliestHour = [self earliestHourForSection:section];
     NSInteger latestHour = [self latestHourForSection:section];
     
-    if ((earliestHour != NSUndefinedDateComponent) && (latestHour != NSUndefinedDateComponent)) {
+    if ((earliestHour != NSDateComponentUndefined) && (latestHour != NSDateComponentUndefined)) {
         return (self.hourHeight * (latestHour - earliestHour));
     } else {
         return 0.0;
@@ -1105,7 +1105,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     NSInteger earliestHour = NSIntegerMax;
     for (NSInteger section = 0; section < self.collectionView.numberOfSections; section++) {
         CGFloat sectionEarliestHour = [self earliestHourForSection:section];
-        if ((sectionEarliestHour < earliestHour) && (sectionEarliestHour != NSUndefinedDateComponent)) {
+        if ((sectionEarliestHour < earliestHour) && (sectionEarliestHour != NSDateComponentUndefined)) {
             earliestHour = sectionEarliestHour;
         }
     }
@@ -1125,7 +1125,7 @@ NSUInteger const MSCollectionMinBackgroundZ = 0.0;
     NSInteger latestHour = NSIntegerMin;
     for (NSInteger section = 0; section < self.collectionView.numberOfSections; section++) {
         CGFloat sectionLatestHour = [self latestHourForSection:section];
-        if ((sectionLatestHour > latestHour) && (sectionLatestHour != NSUndefinedDateComponent)) {
+        if ((sectionLatestHour > latestHour) && (sectionLatestHour != NSDateComponentUndefined)) {
             latestHour = sectionLatestHour;
         }
     }
