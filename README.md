@@ -6,7 +6,7 @@
 
 # UICollectionView?
 
-`UICollectionView` is awesome. If you're unfamiliar, read Matt Thompson's [excellent article](http://nshipster.com/uicollectionview/) about them on [NSHipster](http://nshipster.com). Everyone should use them (yes, even instead of good ol' `UITableView`). This is especially true now that iOS 6+ adoption is [over 90%](http://david-smith.org/iosversionstats/) (As of March, 2013). It's the right thing to do.
+`UICollectionView` is awesome. If you're unfamiliar, read Mattt Thompson's [excellent article](http://nshipster.com/uicollectionview/) about them on [NSHipster](http://nshipster.com). Everyone should use them (yes, even instead of good ol' `UITableView`). This is especially true now that iOS 6+ adoption is [over 90%](http://david-smith.org/iosversionstats/) (As of March, 2013). It's the right thing to do.
 
 Because of how awesome `UICollectionView` is, the `UIViewController` powering the below example is incredibly thin—only about *175 lines of code*, including whitespace.
 
